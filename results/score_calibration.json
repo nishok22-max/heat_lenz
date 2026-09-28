@@ -1,0 +1,501 @@
+{
+ "_comment": "backend/scripts/calibrate_score.py - HeatLens score calibrated against real daily deaths.",
+ "data": {
+  "source": "Azhar GS et al., PLoS ONE 2014;9(3):e91831, Figures 1-2 (daily counts read from the published charts)",
+  "period": [
+   "2010-05-01",
+   "2010-05-31"
+  ],
+  "n_days": 31,
+  "deaths_total": 4462,
+  "reference": "same day, average of May 2009 and May 2011 (the paper's own reference)"
+ },
+ "model": "deaths ~ Poisson(reference x exp(a + b x score)), same-day score; 2,000 bootstrap resamples of days",
+ "a": -2.27091,
+ "b_per_score_point": 0.03253,
+ "b_ci": [
+  0.02331,
+  0.03934
+ ],
+ "extra_deaths_pct_per_10_points": 38.4,
+ "calibrated_range": [
+  69.0,
+  97.0
+ ],
+ "curve": [
+  {
+   "score": 69.0,
+   "death_ratio": 0.974,
+   "ci_low": 0.885,
+   "ci_high": 1.075
+  },
+  {
+   "score": 70.0,
+   "death_ratio": 1.006,
+   "ci_low": 0.919,
+   "ci_high": 1.103
+  },
+  {
+   "score": 71.0,
+   "death_ratio": 1.039,
+   "ci_low": 0.954,
+   "ci_high": 1.132
+  },
+  {
+   "score": 72.0,
+   "death_ratio": 1.074,
+   "ci_low": 0.992,
+   "ci_high": 1.161
+  },
+  {
+   "score": 73.0,
+   "death_ratio": 1.109,
+   "ci_low": 1.029,
+   "ci_high": 1.192
+  },
+  {
+   "score": 74.0,
+   "death_ratio": 1.146,
+   "ci_low": 1.068,
+   "ci_high": 1.224
+  },
+  {
+   "score": 75.0,
+   "death_ratio": 1.184,
+   "ci_low": 1.108,
+   "ci_high": 1.258
+  },
+  {
+   "score": 76.0,
+   "death_ratio": 1.223,
+   "ci_low": 1.148,
+   "ci_high": 1.296
+  },
+  {
+   "score": 77.0,
+   "death_ratio": 1.263,
+   "ci_low": 1.189,
+   "ci_high": 1.336
+  },
+  {
+   "score": 78.0,
+   "death_ratio": 1.305,
+   "ci_low": 1.23,
+   "ci_high": 1.376
+  },
+  {
+   "score": 79.0,
+   "death_ratio": 1.348,
+   "ci_low": 1.272,
+   "ci_high": 1.422
+  },
+  {
+   "score": 80.0,
+   "death_ratio": 1.393,
+   "ci_low": 1.311,
+   "ci_high": 1.469
+  },
+  {
+   "score": 81.0,
+   "death_ratio": 1.439,
+   "ci_low": 1.349,
+   "ci_high": 1.518
+  },
+  {
+   "score": 82.0,
+   "death_ratio": 1.487,
+   "ci_low": 1.388,
+   "ci_high": 1.571
+  },
+  {
+   "score": 83.0,
+   "death_ratio": 1.536,
+   "ci_low": 1.424,
+   "ci_high": 1.627
+  },
+  {
+   "score": 84.0,
+   "death_ratio": 1.587,
+   "ci_low": 1.461,
+   "ci_high": 1.685
+  },
+  {
+   "score": 85.0,
+   "death_ratio": 1.639,
+   "ci_low": 1.5,
+   "ci_high": 1.747
+  },
+  {
+   "score": 86.0,
+   "death_ratio": 1.693,
+   "ci_low": 1.539,
+   "ci_high": 1.812
+  },
+  {
+   "score": 87.0,
+   "death_ratio": 1.749,
+   "ci_low": 1.578,
+   "ci_high": 1.88
+  },
+  {
+   "score": 88.0,
+   "death_ratio": 1.807,
+   "ci_low": 1.619,
+   "ci_high": 1.951
+  },
+  {
+   "score": 89.0,
+   "death_ratio": 1.867,
+   "ci_low": 1.659,
+   "ci_high": 2.026
+  },
+  {
+   "score": 90.0,
+   "death_ratio": 1.928,
+   "ci_low": 1.7,
+   "ci_high": 2.103
+  },
+  {
+   "score": 91.0,
+   "death_ratio": 1.992,
+   "ci_low": 1.742,
+   "ci_high": 2.184
+  },
+  {
+   "score": 92.0,
+   "death_ratio": 2.058,
+   "ci_low": 1.783,
+   "ci_high": 2.269
+  },
+  {
+   "score": 93.0,
+   "death_ratio": 2.126,
+   "ci_low": 1.826,
+   "ci_high": 2.356
+  },
+  {
+   "score": 94.0,
+   "death_ratio": 2.196,
+   "ci_low": 1.871,
+   "ci_high": 2.447
+  },
+  {
+   "score": 95.0,
+   "death_ratio": 2.269,
+   "ci_low": 1.916,
+   "ci_high": 2.544
+  },
+  {
+   "score": 96.0,
+   "death_ratio": 2.344,
+   "ci_low": 1.962,
+   "ci_high": 2.643
+  },
+  {
+   "score": 97.0,
+   "death_ratio": 2.422,
+   "ci_low": 2.008,
+   "ci_high": 2.748
+  }
+ ],
+ "days": [
+  {
+   "date": "2010-05-01",
+   "score": 70.8,
+   "deaths": 101,
+   "reference": 109,
+   "death_ratio": 0.927
+  },
+  {
+   "date": "2010-05-02",
+   "score": 77.4,
+   "deaths": 120,
+   "reference": 103,
+   "death_ratio": 1.165
+  },
+  {
+   "date": "2010-05-03",
+   "score": 74.7,
+   "deaths": 141,
+   "reference": 92,
+   "death_ratio": 1.533
+  },
+  {
+   "date": "2010-05-04",
+   "score": 71.4,
+   "deaths": 110,
+   "reference": 105,
+   "death_ratio": 1.048
+  },
+  {
+   "date": "2010-05-05",
+   "score": 69.2,
+   "deaths": 115,
+   "reference": 96,
+   "death_ratio": 1.198
+  },
+  {
+   "date": "2010-05-06",
+   "score": 70.1,
+   "deaths": 108,
+   "reference": 94,
+   "death_ratio": 1.149
+  },
+  {
+   "date": "2010-05-07",
+   "score": 72.0,
+   "deaths": 125,
+   "reference": 104,
+   "death_ratio": 1.202
+  },
+  {
+   "date": "2010-05-08",
+   "score": 74.9,
+   "deaths": 120,
+   "reference": 105,
+   "death_ratio": 1.143
+  },
+  {
+   "date": "2010-05-09",
+   "score": 77.4,
+   "deaths": 131,
+   "reference": 112,
+   "death_ratio": 1.17
+  },
+  {
+   "date": "2010-05-10",
+   "score": 73.2,
+   "deaths": 118,
+   "reference": 111,
+   "death_ratio": 1.063
+  },
+  {
+   "date": "2010-05-11",
+   "score": 74.0,
+   "deaths": 122,
+   "reference": 94,
+   "death_ratio": 1.298
+  },
+  {
+   "date": "2010-05-12",
+   "score": 80.0,
+   "deaths": 125,
+   "reference": 96,
+   "death_ratio": 1.302
+  },
+  {
+   "date": "2010-05-13",
+   "score": 81.5,
+   "deaths": 127,
+   "reference": 84,
+   "death_ratio": 1.512
+  },
+  {
+   "date": "2010-05-14",
+   "score": 80.0,
+   "deaths": 134,
+   "reference": 105,
+   "death_ratio": 1.276
+  },
+  {
+   "date": "2010-05-15",
+   "score": 73.1,
+   "deaths": 122,
+   "reference": 98,
+   "death_ratio": 1.245
+  },
+  {
+   "date": "2010-05-16",
+   "score": 73.8,
+   "deaths": 135,
+   "reference": 87,
+   "death_ratio": 1.552
+  },
+  {
+   "date": "2010-05-17",
+   "score": 76.6,
+   "deaths": 116,
+   "reference": 101,
+   "death_ratio": 1.149
+  },
+  {
+   "date": "2010-05-18",
+   "score": 78.4,
+   "deaths": 104,
+   "reference": 102,
+   "death_ratio": 1.02
+  },
+  {
+   "date": "2010-05-19",
+   "score": 85.5,
+   "deaths": 156,
+   "reference": 104,
+   "death_ratio": 1.5
+  },
+  {
+   "date": "2010-05-20",
+   "score": 95.6,
+   "deaths": 201,
+   "reference": 107,
+   "death_ratio": 1.879
+  },
+  {
+   "date": "2010-05-21",
+   "score": 96.2,
+   "deaths": 308,
+   "reference": 109,
+   "death_ratio": 2.826
+  },
+  {
+   "date": "2010-05-22",
+   "score": 94.9,
+   "deaths": 248,
+   "reference": 105,
+   "death_ratio": 2.362
+  },
+  {
+   "date": "2010-05-23",
+   "score": 92.7,
+   "deaths": 228,
+   "reference": 105,
+   "death_ratio": 2.171
+  },
+  {
+   "date": "2010-05-24",
+   "score": 91.0,
+   "deaths": 202,
+   "reference": 79,
+   "death_ratio": 2.557
+  },
+  {
+   "date": "2010-05-25",
+   "score": 85.9,
+   "deaths": 174,
+   "reference": 113,
+   "death_ratio": 1.54
+  },
+  {
+   "date": "2010-05-26",
+   "score": 83.1,
+   "deaths": 170,
+   "reference": 94,
+   "death_ratio": 1.809
+  },
+  {
+   "date": "2010-05-27",
+   "score": 82.5,
+   "deaths": 132,
+   "reference": 94,
+   "death_ratio": 1.404
+  },
+  {
+   "date": "2010-05-28",
+   "score": 83.7,
+   "deaths": 121,
+   "reference": 114,
+   "death_ratio": 1.061
+  },
+  {
+   "date": "2010-05-29",
+   "score": 78.2,
+   "deaths": 147,
+   "reference": 109,
+   "death_ratio": 1.349
+  },
+  {
+   "date": "2010-05-30",
+   "score": 74.9,
+   "deaths": 109,
+   "reference": 101,
+   "death_ratio": 1.079
+  },
+  {
+   "date": "2010-05-31",
+   "score": 71.7,
+   "deaths": 92,
+   "reference": 108,
+   "death_ratio": 0.852
+  }
+ ],
+ "comparison": [
+  {
+   "measure": "HeatLens score",
+   "timing": "same day",
+   "loo_mae_deaths_per_day": 20.4,
+   "spearman_with_death_ratio": 0.68,
+   "used_for_calibration": true
+  },
+  {
+   "measure": "HeatLens score",
+   "timing": "same day + day before",
+   "loo_mae_deaths_per_day": 18.1,
+   "spearman_with_death_ratio": 0.68,
+   "used_for_calibration": false
+  },
+  {
+   "measure": "Airport thermometer (daily max)",
+   "timing": "same day",
+   "loo_mae_deaths_per_day": 19.2,
+   "spearman_with_death_ratio": 0.77,
+   "used_for_calibration": false
+  },
+  {
+   "measure": "Airport thermometer (daily max)",
+   "timing": "same day + day before",
+   "loo_mae_deaths_per_day": 18.8,
+   "spearman_with_death_ratio": 0.74,
+   "used_for_calibration": false
+  },
+  {
+   "measure": "Air temperature, weather model (daily max)",
+   "timing": "same day",
+   "loo_mae_deaths_per_day": 23.2,
+   "spearman_with_death_ratio": 0.63,
+   "used_for_calibration": false
+  },
+  {
+   "measure": "Air temperature, weather model (daily max)",
+   "timing": "same day + day before",
+   "loo_mae_deaths_per_day": 19.8,
+   "spearman_with_death_ratio": 0.7,
+   "used_for_calibration": false
+  },
+  {
+   "measure": "UTCI (daily max)",
+   "timing": "same day",
+   "loo_mae_deaths_per_day": 23.5,
+   "spearman_with_death_ratio": 0.69,
+   "used_for_calibration": false
+  },
+  {
+   "measure": "UTCI (daily max)",
+   "timing": "same day + day before",
+   "loo_mae_deaths_per_day": 18.8,
+   "spearman_with_death_ratio": 0.71,
+   "used_for_calibration": false
+  },
+  {
+   "measure": "WBGT (daily max)",
+   "timing": "same day",
+   "loo_mae_deaths_per_day": 30.9,
+   "spearman_with_death_ratio": 0.55,
+   "used_for_calibration": false
+  },
+  {
+   "measure": "WBGT (daily max)",
+   "timing": "same day + day before",
+   "loo_mae_deaths_per_day": 30.5,
+   "spearman_with_death_ratio": 0.52,
+   "used_for_calibration": false
+  }
+ ],
+ "best_same_day_measure": "Airport thermometer (daily max)",
+ "score_is_best_same_day": false,
+ "limitations": [
+  "One heatwave, 31 days, one city: not tested on any other year.",
+  "Daily deaths are read from the paper's published charts (checked: the read-off sums to the published 4,462 deaths; the reference to within 0.7 % of the published 3,118).",
+  "Scores outside the calibrated range get no death estimate.",
+  "The score for May 2010 comes from the city-level weather record (one reanalysis point), so this calibrates the citywide score, not differences between wards.",
+  "Deaths from all causes: the model says how much more deadly a day was, not why."
+ ]
+}

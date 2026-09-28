@@ -1,0 +1,44 @@
+# Heat-illness signs, first aid and emergency kit, for the chat assistant.
+#
+# The same published NDMA text as frontend/src/lib/heatIllness.ts (tests/test_chat_rulebook.py
+# checks the two stay identical). Source: National Disaster Management Authority, Heat Wave page,
+# https://ndma.gov.in/Natural-Hazards/Heat-Wave (retrieved 2026-09-23). Wording kept as published;
+# only spelling slips on the page are corrected. The emergency number is the one AMC's own plan
+# names: "108 Emergency Service" (AMC Heat Action Plan 2019, p.17).
+
+source = "National Disaster Management Authority (NDMA), Heat Wave page"
+emergency_number = "108"
+emergency_source = "AMC Heat Action Plan 2019: \"108 Emergency Service\""
+
+first_aid = [
+  "Move the person to a cool place under the shade",
+  "Give water or a rehydrating drink (if the person is still conscious)",
+  "Fan the person",
+  "Cool the person by putting a cool wet cloth on his/her face/body",
+  "Loosen clothes for better ventilation",
+  "Do not give alcohol, caffeine or aerated drink",
+  "Consult a doctor if symptoms get worse or are long lasting or the person is unconscious",
+]
+
+kit = [
+  "Water bottle",
+  "Umbrella / hat or cap / head cover",
+  "Hand towel",
+  "Hand fan",
+  "Electrolyte / glucose / oral rehydration",
+]
+
+[[illness]]
+name = "Heat cramps"
+level = "mild"
+signs = ["Swelling (oedema)", "Fainting", "Fever below 39 °C (102 °F)"]
+
+[[illness]]
+name = "Heat exhaustion"
+level = "serious"
+signs = ["Fatigue", "Weakness", "Dizziness", "Headache", "Nausea", "Vomiting", "Muscle cramps", "Sweating"]
+
+[[illness]]
+name = "Heat stroke"
+level = "emergency"
+signs = ["Body temperature 40 °C (104 °F) or more", "Delirium", "Seizures", "Coma"]

@@ -1,0 +1,61 @@
+# Python virtual environment & bytecode
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+pytest.ini
+
+# Node
+node_modules/
+dist/
+build/
+*.log
+
+# Git backup
+.git_backup/
+*.bak
+
+# Non-runtime / offline folders (presentations, docs, offline scripts, test suites)
+presentation/
+docs/
+data_acquisition/
+scripts/
+backend/tests/
+backend/scripts/
+htsi/tests/
+frontend/scripts/
+frontend/shot.cjs
+
+# Offline / raw source datasets (only clean runtime datasets are tracked)
+datasets/imd_grid_1deg/
+datasets/satellite/
+datasets/population/
+datasets/station/
+datasets/geo/
+datasets/census/DDW_PCA*.xlsx
+datasets/open_meteo/ahmedabad_hourly_MarJun_*.csv
+datasets/open_meteo/ahmedabad_hourly_full_2010_2024.csv
+
+# Non-runtime results artefacts
+results/*.jpg
+results/*.png
+results/run_log.txt
+results/chat_*.json
+results/within_city_spread.json
+
+# IDE / OS / Claude
+.claude/
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Secrets
+.env
+.env.*
+!.env.example

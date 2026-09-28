@@ -1,0 +1,244 @@
+{
+  "_comment": "HeatLens temperature inputs scored against a real station. backend/scripts/build_station_verification.py.",
+  "station": {
+    "name": "Ahmedabad airport (WMO 42647)",
+    "id": "42647099999",
+    "lat": 23.077,
+    "lon": 72.635,
+    "source": "NOAA NCEI Global Summary of the Day, daily MAX temperature",
+    "url": "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/{year}/42647099999.csv"
+  },
+  "model_point": {
+    "lat": 23.03,
+    "lon": 72.58
+  },
+  "season": "March-June",
+  "retrieved": "2026-09-23",
+  "caveats": [
+    "One station, about 6 km from the model point: this checks the city-level input, not ward-to-ward differences.",
+    "GSOD daily MAX is sometimes derived from synoptic reports (flag '*'), which can read slightly below the true daily maximum.",
+    "1623 of 1892 station days carry that flag."
+  ],
+  "history": {
+    "model": "Open-Meteo archive (reanalysis) as served by HeatLens, 2010-2024",
+    "n_days": 1771,
+    "bias_c": -1.65,
+    "mae_c": 1.92,
+    "rmse_c": 2.27,
+    "pearson_r": 0.907,
+    "amc_level_agreement_pct": 70.1,
+    "station_alert_days": 647,
+    "station_alert_days_model_missed": 321,
+    "amc_level_confusion": {
+      "station_Green": {
+        "model_Green": 1095,
+        "model_Yellow": 29,
+        "model_Orange": 0,
+        "model_Red": 0
+      },
+      "station_Yellow": {
+        "model_Green": 277,
+        "model_Yellow": 121,
+        "model_Orange": 4,
+        "model_Red": 0
+      },
+      "station_Orange": {
+        "model_Green": 30,
+        "model_Yellow": 65,
+        "model_Orange": 18,
+        "model_Red": 4
+      },
+      "station_Red": {
+        "model_Green": 14,
+        "model_Yellow": 82,
+        "model_Orange": 24,
+        "model_Red": 8
+      }
+    }
+  },
+  "forecast": {
+    "model": "Open-Meteo forecast, Previous Runs API (temperature_2m_previous_dayN), March-June 2024 onward",
+    "leads": {
+      "1": {
+        "n_days": 237,
+        "bias_c": -0.06,
+        "mae_c": 0.95,
+        "rmse_c": 1.42,
+        "pearson_r": 0.933,
+        "amc_level_agreement_pct": 85.7,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 14,
+        "amc_level_confusion": {
+          "station_Green": {
+            "model_Green": 173,
+            "model_Yellow": 9,
+            "model_Orange": 0,
+            "model_Red": 0
+          },
+          "station_Yellow": {
+            "model_Green": 14,
+            "model_Yellow": 23,
+            "model_Orange": 6,
+            "model_Red": 0
+          },
+          "station_Orange": {
+            "model_Green": 0,
+            "model_Yellow": 0,
+            "model_Orange": 5,
+            "model_Red": 3
+          },
+          "station_Red": {
+            "model_Green": 0,
+            "model_Yellow": 0,
+            "model_Orange": 2,
+            "model_Red": 2
+          }
+        }
+      },
+      "2": {
+        "n_days": 237,
+        "bias_c": -0.03,
+        "mae_c": 1.08,
+        "rmse_c": 1.62,
+        "pearson_r": 0.916,
+        "amc_level_agreement_pct": 84.8,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 15,
+        "amc_level_confusion": {
+          "station_Green": {
+            "model_Green": 172,
+            "model_Yellow": 9,
+            "model_Orange": 1,
+            "model_Red": 0
+          },
+          "station_Yellow": {
+            "model_Green": 15,
+            "model_Yellow": 22,
+            "model_Orange": 6,
+            "model_Red": 0
+          },
+          "station_Orange": {
+            "model_Green": 0,
+            "model_Yellow": 0,
+            "model_Orange": 4,
+            "model_Red": 4
+          },
+          "station_Red": {
+            "model_Green": 0,
+            "model_Yellow": 0,
+            "model_Orange": 1,
+            "model_Red": 3
+          }
+        }
+      },
+      "3": {
+        "n_days": 237,
+        "bias_c": 0.09,
+        "mae_c": 1.16,
+        "rmse_c": 1.72,
+        "pearson_r": 0.905,
+        "amc_level_agreement_pct": 82.7,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 13,
+        "amc_level_confusion": {
+          "station_Green": {
+            "model_Green": 170,
+            "model_Yellow": 12,
+            "model_Orange": 0,
+            "model_Red": 0
+          },
+          "station_Yellow": {
+            "model_Green": 13,
+            "model_Yellow": 21,
+            "model_Orange": 9,
+            "model_Red": 0
+          },
+          "station_Orange": {
+            "model_Green": 0,
+            "model_Yellow": 1,
+            "model_Orange": 2,
+            "model_Red": 5
+          },
+          "station_Red": {
+            "model_Green": 0,
+            "model_Yellow": 0,
+            "model_Orange": 1,
+            "model_Red": 3
+          }
+        }
+      },
+      "4": {
+        "n_days": 237,
+        "bias_c": 0.21,
+        "mae_c": 1.13,
+        "rmse_c": 1.73,
+        "pearson_r": 0.904,
+        "amc_level_agreement_pct": 84.8,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 9,
+        "amc_level_confusion": {
+          "station_Green": {
+            "model_Green": 170,
+            "model_Yellow": 12,
+            "model_Orange": 0,
+            "model_Red": 0
+          },
+          "station_Yellow": {
+            "model_Green": 9,
+            "model_Yellow": 25,
+            "model_Orange": 8,
+            "model_Red": 1
+          },
+          "station_Orange": {
+            "model_Green": 0,
+            "model_Yellow": 0,
+            "model_Orange": 3,
+            "model_Red": 5
+          },
+          "station_Red": {
+            "model_Green": 0,
+            "model_Yellow": 0,
+            "model_Orange": 1,
+            "model_Red": 3
+          }
+        }
+      },
+      "5": {
+        "n_days": 237,
+        "bias_c": 0.15,
+        "mae_c": 1.24,
+        "rmse_c": 1.82,
+        "pearson_r": 0.89,
+        "amc_level_agreement_pct": 85.2,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 12,
+        "amc_level_confusion": {
+          "station_Green": {
+            "model_Green": 169,
+            "model_Yellow": 13,
+            "model_Orange": 0,
+            "model_Red": 0
+          },
+          "station_Yellow": {
+            "model_Green": 12,
+            "model_Yellow": 26,
+            "model_Orange": 4,
+            "model_Red": 1
+          },
+          "station_Orange": {
+            "model_Green": 0,
+            "model_Yellow": 1,
+            "model_Orange": 3,
+            "model_Red": 4
+          },
+          "station_Red": {
+            "model_Green": 0,
+            "model_Yellow": 0,
+            "model_Orange": 0,
+            "model_Red": 4
+          }
+        }
+      }
+    }
+  }
+}

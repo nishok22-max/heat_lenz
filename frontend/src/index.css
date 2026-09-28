@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* The app is light-only. Without this, Tailwind's `dark:` classes follow the operating system's
+   dark mode and paint light text on light cards. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: #13265c;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One surface style for every panel in the app. */
+@utility card {
+  border-radius: 1rem;
+  border: 1px solid #e4eaf3;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 30, 69, 0.04), 0 1px 1px rgba(15, 30, 69, 0.02);
+}
+
+/* Small uppercase label above a value or a group of values. */
+@utility eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7a99;
+}
+
+/* Light, low-contrast base map (RiskMap.tsx) so ward colours stand out. */
+.heatlens-light-tiles {
+  filter: grayscale(0.85) brightness(1.08) contrast(0.88);
+}

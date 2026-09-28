@@ -1,0 +1,253 @@
+{
+  "_comment": "Real per-ward population for the 48 AMC wards from JRC GHS-POP R2023A (epoch 2020, 100 m). A published model of census counts, not a headcount. backend/scripts/build_ward_population.py.",
+  "source": "JRC GHS-POP R2023A, epoch 2020, 100 m, tiles R7_C25 + R7_C26 (Schiavina et al. 2023, European Commission JRC), retrieved 2026-09-23. Each ward sums the 100 m cells whose centre falls inside its polygon.",
+  "epoch": 2020,
+  "ward_total_population": 7334231,
+  "census_2011_check": {
+    "total_population": 5577940,
+    "ward_count_2011": 57,
+    "source": "Census of India 2011, Primary Census Abstract (town/village/ward), Gujarat - District Ahmadabad, DDW_PCA2407_2011_MDDS; censusindia.gov.in NADA catalogue 6665"
+  },
+  "wards": {
+    "ward-48": {
+      "population": 288635,
+      "density_per_km2": 9364,
+      "cells": 3084
+    },
+    "ward-47": {
+      "population": 233268,
+      "density_per_km2": 20610,
+      "cells": 1140
+    },
+    "ward-46": {
+      "population": 340098,
+      "density_per_km2": 7054,
+      "cells": 4833
+    },
+    "ward-45": {
+      "population": 183092,
+      "density_per_km2": 44680,
+      "cells": 409
+    },
+    "ward-44": {
+      "population": 165789,
+      "density_per_km2": 46138,
+      "cells": 362
+    },
+    "ward-43": {
+      "population": 85950,
+      "density_per_km2": 44206,
+      "cells": 196
+    },
+    "ward-42": {
+      "population": 124018,
+      "density_per_km2": 37286,
+      "cells": 336
+    },
+    "ward-41": {
+      "population": 251795,
+      "density_per_km2": 18644,
+      "cells": 1355
+    },
+    "ward-40": {
+      "population": 181074,
+      "density_per_km2": 33057,
+      "cells": 542
+    },
+    "ward-39": {
+      "population": 135133,
+      "density_per_km2": 42914,
+      "cells": 313
+    },
+    "ward-38": {
+      "population": 131390,
+      "density_per_km2": 40474,
+      "cells": 326
+    },
+    "ward-37": {
+      "population": 260597,
+      "density_per_km2": 57222,
+      "cells": 456
+    },
+    "ward-36": {
+      "population": 119944,
+      "density_per_km2": 33768,
+      "cells": 356
+    },
+    "ward-35": {
+      "population": 163929,
+      "density_per_km2": 16003,
+      "cells": 1025
+    },
+    "ward-34": {
+      "population": 183212,
+      "density_per_km2": 7162,
+      "cells": 2560
+    },
+    "ward-33": {
+      "population": 231103,
+      "density_per_km2": 9764,
+      "cells": 2372
+    },
+    "ward-32": {
+      "population": 105131,
+      "density_per_km2": 36192,
+      "cells": 296
+    },
+    "ward-31": {
+      "population": 201076,
+      "density_per_km2": 36000,
+      "cells": 555
+    },
+    "ward-30": {
+      "population": 352301,
+      "density_per_km2": 62885,
+      "cells": 564
+    },
+    "ward-29": {
+      "population": 115550,
+      "density_per_km2": 40984,
+      "cells": 284
+    },
+    "ward-28": {
+      "population": 155667,
+      "density_per_km2": 47539,
+      "cells": 328
+    },
+    "ward-27": {
+      "population": 137234,
+      "density_per_km2": 44773,
+      "cells": 305
+    },
+    "ward-26": {
+      "population": 111999,
+      "density_per_km2": 41693,
+      "cells": 265
+    },
+    "ward-25": {
+      "population": 158080,
+      "density_per_km2": 42134,
+      "cells": 376
+    },
+    "ward-24": {
+      "population": 334570,
+      "density_per_km2": 29056,
+      "cells": 1157
+    },
+    "ward-23": {
+      "population": 140057,
+      "density_per_km2": 45149,
+      "cells": 310
+    },
+    "ward-22": {
+      "population": 178400,
+      "density_per_km2": 38942,
+      "cells": 456
+    },
+    "ward-21": {
+      "population": 81568,
+      "density_per_km2": 50245,
+      "cells": 160
+    },
+    "ward-20": {
+      "population": 90747,
+      "density_per_km2": 9179,
+      "cells": 995
+    },
+    "ward-19": {
+      "population": 54365,
+      "density_per_km2": 4190,
+      "cells": 1302
+    },
+    "ward-18": {
+      "population": 657559,
+      "density_per_km2": 54701,
+      "cells": 1207
+    },
+    "ward-17": {
+      "population": 135773,
+      "density_per_km2": 35845,
+      "cells": 378
+    },
+    "ward-16": {
+      "population": 156555,
+      "density_per_km2": 35241,
+      "cells": 447
+    },
+    "ward-15": {
+      "population": 105395,
+      "density_per_km2": 43115,
+      "cells": 246
+    },
+    "ward-14": {
+      "population": 77223,
+      "density_per_km2": 34467,
+      "cells": 224
+    },
+    "ward-13": {
+      "population": 135032,
+      "density_per_km2": 43338,
+      "cells": 312
+    },
+    "ward-12": {
+      "population": 207816,
+      "density_per_km2": 14967,
+      "cells": 1398
+    },
+    "ward-11": {
+      "population": 53109,
+      "density_per_km2": 6076,
+      "cells": 877
+    },
+    "ward-10": {
+      "population": 132927,
+      "density_per_km2": 25269,
+      "cells": 524
+    },
+    "ward-09": {
+      "population": 42058,
+      "density_per_km2": 8545,
+      "cells": 493
+    },
+    "ward-08": {
+      "population": 48836,
+      "density_per_km2": 1739,
+      "cells": 2806
+    },
+    "ward-07": {
+      "population": 15155,
+      "density_per_km2": 5034,
+      "cells": 304
+    },
+    "ward-06": {
+      "population": 30160,
+      "density_per_km2": 9478,
+      "cells": 318
+    },
+    "ward-05": {
+      "population": 32829,
+      "density_per_km2": 4334,
+      "cells": 759
+    },
+    "ward-04": {
+      "population": 64724,
+      "density_per_km2": 6595,
+      "cells": 986
+    },
+    "ward-03": {
+      "population": 72666,
+      "density_per_km2": 6083,
+      "cells": 1193
+    },
+    "ward-02": {
+      "population": 27456,
+      "density_per_km2": 1998,
+      "cells": 1381
+    },
+    "ward-01": {
+      "population": 43186,
+      "density_per_km2": 1275,
+      "cells": 3396
+    }
+  }
+}

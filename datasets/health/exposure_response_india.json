@@ -1,0 +1,140 @@
+{
+  "_comment": "Published heat-mortality exposure-response coefficients for Indian cities. Consumed by backend/app/services/health.py to produce a RELATIVE-RISK index. These are literature values from peer-reviewed studies, NOT locally fitted to Ahmedabad outcome data. Every API response derived from this file must carry evidence=MODELLED_UNCALIBRATED and calibration_status=not_validated_locally.",
+  "schema_version": "1.0",
+  "retrieved_on": "2026-09-18",
+  "usage_note": "effect values are PERCENT CHANGE in daily all-cause mortality on exposed days vs unexposed days. relative_risk = 1 + (effect_pct / 100).",
+
+  "sources": {
+    "de_bont_2024": {
+      "citation": "de Bont J, Nori-Sarma A, Stafoggia M, et al. Impact of heatwaves on all-cause mortality in India: A comprehensive multi-city study. Environ Int. 2024;184:108461.",
+      "doi": "10.1016/j.envint.2024.108461",
+      "pmcid": "PMC11790314",
+      "study_design": "Two-stage time-series; quasi-Poisson GAM per city, random-effects meta-analysis",
+      "period": "2008-2019",
+      "cities": 10,
+      "total_deaths": 3600000,
+      "exposure_variable": "daily MEAN temperature (ERA5, 0.25deg), percentile-based",
+      "adjustments": [
+        "penalized spline of calendar day, 9 df/year",
+        "day-of-week indicator",
+        "natural spline 4 df, dew-point residuals (lag 0-1)",
+        "PM2.5 (lag 0-1)"
+      ],
+      "data_availability": "CONFIDENTIAL - daily death counts not downloadable"
+    },
+    "rathi_2021": {
+      "citation": "Rathi SK, Sodani PR. Summer temperature and all-cause mortality from 2006 to 2015 for Hyderabad, India. Afr Health Sci. 2021;21(3):1474-1481.",
+      "doi": "10.4314/ahs.v21i3.59",
+      "pmcid": "PMC8843295",
+      "study_design": "Descriptive + bivariate, Pearson correlation for lag",
+      "period": "2006-2015, March-June only",
+      "cities": 1,
+      "total_deaths": 122117,
+      "exposure_variable": "daily MAXIMUM temperature and Heat Index",
+      "data_availability": "Obtained from municipal Birth & Death Registration Dept - shows the request route"
+    }
+  },
+
+  "pooled_heatwave_effects": {
+    "_source": "de_bont_2024",
+    "_definition": "heatwave = N consecutive days with daily mean temperature above the Pth annual percentile",
+    "_effect_units": "percent change in daily all-cause mortality vs non-heatwave days",
+    "entries": [
+      { "percentile": 95, "consecutive_days": 2, "effect_pct": 12.7, "ci_low": 8.9,  "ci_high": 16.6 },
+      { "percentile": 97, "consecutive_days": 1, "effect_pct": 12.2, "ci_low": 8.5,  "ci_high": 15.9,
+        "note": "closest proxy to the IMD single-day heatwave declaration" },
+      { "percentile": 97, "consecutive_days": 2, "effect_pct": 14.7, "ci_low": 10.3, "ci_high": 19.3,
+        "primary": true, "note": "study's main definition" },
+      { "percentile": 97, "consecutive_days": 3, "effect_pct": 17.8, "ci_low": 12.1, "ci_high": 23.8 },
+      { "percentile": 97, "consecutive_days": 5, "effect_pct": 19.4, "ci_low": 11.5, "ci_high": 27.9 },
+      { "percentile": 99, "consecutive_days": 2, "effect_pct": 19.5, "ci_low": 11.3, "ci_high": 28.4 },
+      { "percentile": 99, "consecutive_days": 5, "effect_pct": 33.2, "ci_low": 18.6, "ci_high": 49.8,
+        "note": "observed in only 6 of 10 cities (Ahmedabad, Chennai, Delhi, Hyderabad, Kolkata, Varanasi)" }
+    ]
+  },
+
+  "city_specific": {
+    "_source": "de_bont_2024",
+    "_definition": "2 consecutive days above the 97th percentile of daily mean temperature",
+    "ahmedabad": {
+      "effect_pct": 24.9, "ci_low": 21.7, "ci_high": 28.2,
+      "relative_risk": 1.249,
+      "mean_daily_deaths": 122,
+      "study_period": "2008 - June 2019",
+      "heatwaves_observed": 28,
+      "heatwaves_per_year": 3.1,
+      "mean_heatwave_length_days": 4.1,
+      "longest_heatwave_days": 15,
+      "mean_heatwave_temp_c": 36.8,
+      "mean_intensity_pct_above_p97": 2.4,
+      "annual_attributable_deaths": 300,
+      "climate_zone": "arid, steppe, hot",
+      "note": "STRONGEST effect of all 10 cities. This is the primary coefficient for HeatLens."
+    },
+    "_range_across_cities": {
+      "weakest": { "city": "Mumbai", "effect_pct": 3.4, "ci_low": 0.8, "ci_high": 6.1 },
+      "strongest": { "city": "Ahmedabad", "effect_pct": 24.9, "ci_low": 21.7, "ci_high": 28.2 },
+      "note": "7x spread across cities - city-specific coefficients matter, do not apply the pooled value to Ahmedabad"
+    },
+    "_other_cities_mean_daily_deaths": {
+      "bangalore": 121, "chennai": 164, "delhi": 284, "hyderabad": 78,
+      "kolkata": 172, "mumbai": 251, "pune": 68, "shimla": 5, "varanasi": 23
+    }
+  },
+
+  "effect_modification": {
+    "_source": "de_bont_2024",
+    "_base": "restricted to heatwaves of 2+ consecutive days above the 97th percentile",
+    "intensity": {
+      "per_unit": "1 percent increase in mean heatwave temperature above the city's 97th percentile",
+      "individual_model_pct": 3.5, "individual_ci": [2.7, 4.3],
+      "mutually_adjusted_pct": 3.8, "mutually_adjusted_ci": [2.8, 4.7],
+      "significant": true,
+      "note": "STRONGEST modifier - use the mutually adjusted value"
+    },
+    "duration": {
+      "per_unit": "1 additional day of heatwave length",
+      "individual_model_pct": 1.4, "individual_ci": [0.7, 2.0],
+      "mutually_adjusted_pct": -0.2, "mutually_adjusted_ci": [-1.0, 0.5],
+      "significant": false,
+      "note": "attenuates to null once intensity is adjusted for - do NOT stack a duration term on top of intensity"
+    },
+    "timing_in_season": {
+      "per_unit": "1 day later start within the summer season",
+      "individual_model_pct": 0.0,
+      "significant": false,
+      "note": "no evidence of harvesting/adaptation effect by season timing"
+    }
+  },
+
+  "absolute_threshold_effects": {
+    "_source": "rathi_2021",
+    "_city": "Hyderabad",
+    "_caution": "descriptive study, weaker design than de_bont_2024; use only as a cross-check",
+    "entries": [
+      { "condition": "daily max temperature >= 40 C", "effect_pct": 16.0,
+        "maps_to_column": "ta_max" },
+      { "condition": "Heat Index > 54 C (NWS 'Extreme Danger')", "effect_pct": 17.0,
+        "maps_to_column": "hi_max",
+        "note": "aligns with plan_a.imd_heat_index_colour / heat_index_nws output" }
+    ],
+    "lag_structure": {
+      "peak_lag_days": 0,
+      "correlation_r": 0.273,
+      "p_value": "<0.01",
+      "note": "effect peaks SAME DAY - supports plan_d's same-day scoring, but says nothing about the multi-day carryover Plan C models"
+    }
+  },
+
+  "implementation_notes": {
+    "threshold_computation": "The percentile thresholds are computable today from results/ahmedabad_daily_2010_2024.csv. plan_b.local_thresholds(daily, percentile=97.0) already implements exactly this. NOTE: the studies use daily MEAN temperature; the daily CSV carries ta_max and ta_min, so derive a mean or recompute from the hourly Open-Meteo file.",
+    "consecutive_day_logic": "services/ensemble.py already needs consecutive_hot_days for plan_d's CUMULATIVE_DEBT regime. Reuse that counter against the p97 threshold rather than writing a second one.",
+    "what_this_does_NOT_license": [
+      "Do not output an absolute predicted death count.",
+      "Do not claim HeatLens is validated - these coefficients validate the TEMPERATURE-mortality link, not the HTSI/PHD indices.",
+      "Do not stack duration and intensity modifiers (duration attenuates to null when mutually adjusted).",
+      "Do not apply the pooled 14.7% to Ahmedabad - the city-specific value is 24.9%."
+    ],
+    "honest_framing": "'Published studies of Ahmedabad 2008-2019 found ~25% higher daily mortality on 2-day heatwaves above the local 97th percentile. Today's conditions match that definition.' That is a defensible sentence. 'We predict 31 deaths tomorrow' is not."
+  }
+}

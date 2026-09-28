@@ -1,0 +1,15 @@
+{
+ "source": "Azhar GS et al. PLoS ONE 2014;9(3):e91831, Figures 1 and 2 (PLOS figshare files 1420652, 1420655)",
+ "method": "Read pixel-by-pixel from the published figures by backend/scripts/digitize_azhar2014.py; 2010 values are the mean of two independent reads (Figure 1 line, Figure 2 bars).",
+ "evidence": "MEASURED_POINT read from a published chart: each day is accurate to a few deaths, not exact.",
+ "checks_against_published_table_1": {
+  "sum_2010_read": 4462,
+  "sum_2010_published": 4462,
+  "sum_2010_error_pct": 0.0,
+  "sum_reference_read": 3140,
+  "sum_reference_published": 3118,
+  "sum_reference_error_pct": 0.71,
+  "figure1_vs_figure2_mean_abs_diff_deaths": 0.93,
+  "figure1_vs_figure2_max_abs_diff_deaths": 4.06
+ }
+}

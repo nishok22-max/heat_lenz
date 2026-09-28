@@ -1,0 +1,115 @@
+# Heat Action Plan trigger rules.
+#
+# HOW A LEVEL IS DECIDED (services/hap.py)
+#   The Ahmedabad Municipal Corporation's own published colour signals, applied to the
+#   city's daily maximum temperature exactly as AMC applies them to the IMD forecast:
+#
+#     AMC Heat Action Plan 2019 (Easy Read version, NRDC / AMC), section IV.A
+#     "Color Signals for Heat Alert", page 3:
+#       Red Alert    - Extreme Heat Alert Day - >= 45 C
+#       Orange Alert - Heat Alert Day         - 43.1 C - 44.9 C
+#       Yellow Alert - Hot Day Advisory       - 41.1 C - 43 C
+#       White        - No Alert               - <= 41 C
+#     https://www.nrdc.org/sites/default/files/ahmedabad-heat-action-plan-2018.pdf
+#     (retrieved 2026-09-23; the file at that URL is titled "Ahmedabad Heat Action Plan 2019")
+#
+#   This app's "Green" level is AMC's "White / No Alert". AMC's table is one citywide
+#   level per day, so every ward shares it; the Tmax used is the unadjusted city value,
+#   never the satellite-adjusted ward value.
+#
+#   Earlier versions derived the level from HeatLens's own thermal-stress band and the
+#   mortality index with hand-set cut-offs (SIH PS 26083 required-solution §3.4, which
+#   itself calls those thresholds "design"). They are now shown alongside the level as
+#   context and no longer change it.
+#
+# HOW ACTIONS ARE CHOSEN
+#   An action applies at its `min_level` and every level above it.
+#
+# `basis` must name a real, checkable source. Where the source itself says the
+# detail is still to be agreed (the power utility), the basis says so instead
+# of implying a protocol exists.
+
+[levels]
+source = "AMC Heat Action Plan 2019 (Easy Read), section IV.A 'Color Signals for Heat Alert', p.3"
+# Lower bounds, in C, of each level, applied to daily max temperature. White/Green is below Yellow.
+yellow_min_c = 41.1
+orange_min_c = 43.1
+red_min_c = 45.0
+
+# ---------------------------------------------------------------- Yellow
+
+[[actions]]
+action_id = "public_awareness"
+min_level = "Yellow"
+department = "public"
+kind = "public_awareness"
+title = "Issue public awareness messages and hydration advisories"
+detail = "Send the fixed-template heat advisory (SMS / WhatsApp / CAP) for the affected zones."
+basis = "AMC Heat Action Plan 2019 (Easy Read) section I: public messages via text messages, radio, social media and WhatsApp; SIH PS 26083 required-solution §3.4 (Yellow)"
+
+[[actions]]
+action_id = "facility_readiness_check"
+min_level = "Yellow"
+department = "health"
+kind = "readiness_check"
+title = "Ask health facilities to check heat-illness readiness"
+detail = "Confirm ORS stock, cooling capacity and staffing for heat-illness presentations."
+basis = "SIH PS 26083 required-solution §3.4 (Yellow); refs [6], [25]"
+
+# ---------------------------------------------------------------- Orange
+
+[[actions]]
+action_id = "cooling_centres"
+min_level = "Orange"
+department = "municipal"
+kind = "cooling_centre_activation"
+title = "Activate cooling centres and shelters"
+detail = "Open designated cooling centres in the affected zones for the forecast day."
+basis = "AMC Heat Action Plan 2019 (Easy Read) p.5: the Nodal Officer \"activates cooling centers, such as temples, public buildings, malls, during a heat alert\"; SIH PS 26083 required-solution §3.4 (Orange)"
+
+[[actions]]
+action_id = "midday_work_stoppage"
+min_level = "Orange"
+department = "labour"
+kind = "work_hours_restriction"
+title = "Stop mandatory outdoor work 11:00-16:00; offer shorter shifts"
+detail = "For platform/gig and outdoor workers: no mandatory work 11:00-16:00, shorter shifts, a 15-minute cooling break every 90 minutes, and drinking water provided."
+basis = "NDMA gig-worker heat advisory (Mongabay India, Aug 2025), which applies during IMD Orange and Red heat alerts; SIH PS 26083 required-solution §3.4 (Orange), ref [26]"
+
+[[actions]]
+action_id = "hospital_surge_preparation"
+min_level = "Orange"
+department = "health"
+kind = "hospital_preparedness"
+title = "Hospitals prepare for a rise in heat-illness cases"
+detail = "Pre-position staff and beds for heat-illness admissions on the forecast day."
+basis = "SIH PS 26083 required-solution §3.4 (Orange); refs [25], [26]"
+
+# ---------------------------------------------------------------- Red
+
+[[actions]]
+action_id = "maximum_work_restrictions"
+min_level = "Red"
+department = "labour"
+kind = "work_hours_restriction"
+title = "Apply maximum outdoor-work restrictions"
+detail = "Extend the Orange restrictions to the maximum permitted; outdoor work only where unavoidable."
+basis = "SIH PS 26083 required-solution §3.4 (Red: all Orange actions plus maximum outdoor-work restrictions)"
+
+[[actions]]
+action_id = "emergency_medical_readiness"
+min_level = "Red"
+department = "health"
+kind = "emergency_readiness"
+title = "Put emergency medical services on heat-illness readiness"
+detail = "Alert emergency medical services and hospital emergency departments."
+basis = "SIH PS 26083 required-solution §3.4 (Red)"
+
+[[actions]]
+action_id = "power_supply_notice"
+min_level = "Red"
+department = "power_utility"
+kind = "power_supply_protection"
+title = "Notify the power utility to protect supply to hospitals and cooling centres"
+detail = "Machine-readable notice listing the affected zones and the forecast day. Actual grid action is decided by the utility."
+basis = "SIH PS 26083 required-solution §3.4 (Red) and requirement R6; the document states utility-specific rules are to be agreed locally, so no published protocol is cited"

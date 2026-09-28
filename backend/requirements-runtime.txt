@@ -1,0 +1,21 @@
+# What the running app imports (backend/app + htsi), for the Docker image. The full
+# requirements.txt adds the satellite/data-build tools (rasterio, planetary-computer, ...) and
+# test tools, which the running app never needs. Versions match requirements.txt.
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
+httpx==0.28.1
+orjson==3.12.0
+pyarrow==25.0.1
+numpy==2.2.6
+pandas==3.0.5
+scipy==1.18.0
+thermofeel==2.3.0
+pythermalcomfort==4.4.2
+numba==0.67.0
+llvmlite==0.49.0
+scikit-learn==1.9.1
+xlrd==2.0.2
+# Chat assistant shared state across replicas (backend/app/chat/store.py)
+redis==5.2.1

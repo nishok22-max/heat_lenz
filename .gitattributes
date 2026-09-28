@@ -1,0 +1,5 @@
+# Keep shell scripts and the audit checklist LF-only: CRLF breaks `read`-based
+# parsing (a trailing \r ends up inside grep patterns) and can make .sh files
+# unexecutable on Linux/CI.
+*.sh            text eol=lf
+tools/*.txt     text eol=lf

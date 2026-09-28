@@ -1,0 +1,118 @@
+# Advisory rule engine — IMPLEMENTATION_PLAN.md §4.2, §5.5.
+#
+# Rules live here, not in Python if-chains, "so a domain expert can review them"
+# (the plan's own words). Each rule is a plain match -> recommendation mapping.
+#
+# Match fields accept "*" for "any value". A rule fires when risk_bands,
+# regimes, personas AND exposure_tiers all match (all four, not any).
+# `exposure_tiers` is optional and defaults to "*". Its values are
+# heatwave | single_day_above_p97 | below_threshold.
+#
+# Multiple rules can fire for the same (risk_band, regime, persona) — all
+# matching rules are returned, most-severe first (severity ordering applied in
+# code, not here).
+#
+# `rationale` is a Python str.format() template. Available placeholders:
+#   {wbgt_max_c} {ta_max_c} {utci_max_c} {night_min_ta_c}
+#   {calibrated_score} {risk_band} {regime} {dominant_driver}
+#   {elderly_share_pct}
+# All are real values from the zone's actual ZoneRisk for the requested date —
+# never invented per-rule numbers. A rule that needs a number not in this list
+# cannot cite it — extend services/advisory.py's context dict instead of
+# guessing a plausible-looking figure here.
+#
+# `basis` must name a real, checkable standard, or a HeatLens model in plain words
+# (the Methods page lists the file behind each model). It is shown to readers as
+# "Source:", so no file paths here. "General guidance" is not an acceptable basis —
+# if a rule doesn't have one, it shouldn't exist yet.
+#
+# Kinds cooling_centre and vulnerable_check are jobs for the city, not for residents:
+# the frontend shows them to officials as HeatLens suggestions (lib/advice.ts) and
+# never as advice to a resident.
+
+[[rules]]
+kind = "cooling_centre"
+risk_bands = ["High", "Extreme"]
+regimes = ["CUMULATIVE_DEBT"]
+personas = ["elderly", "general"]
+title = "Activate overnight cooling centres in this ward"
+rationale = "Night minimum {night_min_ta_c:.1f} °C outdoors. A hot night leaves little overnight recovery in the heat-debt model (the modelled indoor night runs hotter than outdoors), so today's strain compounds tomorrow's."
+basis = "HeatLens heat-debt model, night-recovery term (not calibrated)"
+severity = "high"
+
+[[rules]]
+kind = "cooling_centre"
+risk_bands = ["Moderate", "High", "Extreme"]
+regimes = ["HUMID_OPPRESSIVE"]
+personas = ["elderly", "general"]
+title = "Open daytime cooling centres with dehumidification if available"
+rationale = "WBGT {wbgt_max_c:.1f} °C with UTCI {utci_max_c:.1f} °C — sweat evaporation is impaired in humid-oppressive conditions, so shade alone is insufficient."
+basis = "ISO 7243:2017 (WBGT accounts for humidity directly)"
+severity = "moderate"
+
+[[rules]]
+kind = "hydration"
+risk_bands = ["Moderate", "High", "Extreme"]
+regimes = ["*"]
+personas = ["construction", "elderly", "general"]
+title = "Increase water intake frequency (every 15-20 minutes if outdoors)"
+rationale = "HeatLens score {calibrated_score:.1f} ({risk_band}, uncalibrated), driven by {dominant_driver} — dehydration risk rises with either heat load."
+basis = "NIOSH Heat Stress: Hydration fact sheet (2017): 1 cup (8 oz) of water every 15-20 minutes when working in the heat"
+severity = "moderate"
+
+[[rules]]
+kind = "hydration"
+risk_bands = ["Extreme"]
+regimes = ["*"]
+personas = ["construction"]
+title = "Provide oral rehydration solution (ORS), not water alone"
+rationale = "Extreme band — ISO 7933 PHS water-loss limit (5% body mass) is a realistic risk at this exposure level for unacclimatised workers."
+basis = "ISO 7933:2023 water-loss limit (5 % of body mass)"
+severity = "high"
+
+[[rules]]
+kind = "vulnerable_check"
+risk_bands = ["High", "Extreme"]
+regimes = ["*"]
+personas = ["elderly", "general"]
+title = "Community health workers to check on elderly residents living alone"
+rationale = "Elderly (60+) share {elderly_share_pct:.1f}% (Census 2011, Ahmedabad district urban population, the same figure for every ward). Older adults sweat less and store more heat (see the source reviews)."
+basis = "Reviews on older adults and heat cited by the HeatLens heat-debt model (PMC12481594; Lancet 2021)"
+severity = "moderate"
+
+# (Two "work_hours" rules citing the NDMA outdoor-worker advisory were removed: that advisory applies
+# during AMC/IMD Orange and Red alerts, but these rules could only match the HeatLens score band, so
+# they could show "no outdoor work 11:00-16:00" on a day with no alert. Work-hour restrictions now come
+# only from hap_rules.toml's labour actions, which follow the AMC level.)
+# (A "regional_alert" rule that triggered the Red protocol from HeatLens's own score band was
+# removed: the Heat Action Plan level now comes only from AMC's published thresholds
+# - services/hap.py - and is shown in the advisory's trigger panel.)
+
+# ---------------------------------------------------------------------------
+# Mortality-risk rules (Stage 5). Matched on `exposure_tiers`, which the rules
+# above leave at its default of "*". The extra placeholders available here:
+#   {exposure_tier} {daily_mean_temp_c} {threshold_p97_c} {relative_risk}
+#   {rr_ci_low} {rr_ci_high} {mri_0_100}
+# They are the day's own values from services/health.py — never invented here.
+
+[[rules]]
+kind = "health_alert"
+risk_bands = ["*"]
+regimes = ["*"]
+personas = ["construction", "elderly", "general"]
+exposure_tiers = ["heatwave"]
+title = "Heatwave conditions: published mortality risk is elevated"
+rationale = "Daily mean {daily_mean_temp_c:.1f} °C is above the local 97th percentile ({threshold_p97_c:.1f} °C) for 2 or more consecutive days. In Ahmedabad, daily deaths on such days were about {relative_risk:.2f}x those on non-heatwave days (95% CI {rr_ci_low:.2f}-{rr_ci_high:.2f}). A published association, not a forecast of deaths."
+basis = "de Bont et al., Environ Int 2024;184:108461 (PMC11790314), Ahmedabad city-specific estimate; not validated locally"
+severity = "high"
+
+[[rules]]
+kind = "health_alert"
+risk_bands = ["*"]
+regimes = ["*"]
+personas = ["construction", "elderly", "general"]
+exposure_tiers = ["single_day_above_p97"]
+title = "First day above the local heatwave threshold"
+rationale = "Daily mean {daily_mean_temp_c:.1f} °C exceeds the local 97th percentile ({threshold_p97_c:.1f} °C). A second consecutive day would meet the published heatwave definition."
+basis = "de Bont et al., Environ Int 2024;184:108461 (PMC11790314), heatwave definition; not validated locally"
+severity = "moderate"

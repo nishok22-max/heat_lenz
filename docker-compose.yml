@@ -1,0 +1,49 @@
+# HeatLens scaled out: nginx -> 2 API replicas -> shared Redis (chat memory, rate limits, cache).
+#
+#   docker compose up --build        ->  http://localhost:8080
+#   docker compose up --scale api=4  (more replicas; nginx balances across all of them)
+#
+# The API replicas hold no chat state of their own, so any replica can answer any message.
+# Only nginx publishes a port; the API and Redis are reachable only inside this network.
+
+services:
+  redis:
+    image: redis:7.4-alpine
+    # In-memory only (chat sessions expire after 30 min anyway), capped, and the commands that
+    # could wipe or reconfigure it disabled.
+    command: >
+      redis-server --save "" --appendonly no --maxmemory 256mb --maxmemory-policy allkeys-lru
+      --rename-command FLUSHALL "" --rename-command FLUSHDB "" --rename-command CONFIG ""
+      --rename-command DEBUG "" --rename-command KEYS ""
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: .
+    env_file:
+      - path: backend/.env
+        required: false
+    environment:
+      CHAT_REDIS_URL: redis://redis:6379/0
+    command: >
+      sh -c "uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port 8000
+      --proxy-headers --forwarded-allow-ips='*'"
+    deploy:
+      replicas: 2
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+    restart: unless-stopped

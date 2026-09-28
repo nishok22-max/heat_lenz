@@ -1,0 +1,13 @@
+numpy==2.2.6
+pandas==3.0.5
+scipy==1.18.0
+thermofeel==2.3.0
+pytest==8.3.4
+# Plan C body-simulation engine (ISO 7933 PHS, Gagge-Ji two-node model)
+pythermalcomfort==4.4.2
+numba==0.67.0
+llvmlite==0.49.0
+# Plan D calibrated ensemble
+scikit-learn==1.9.1
+# Census 2011 C-13 age table is an .xls file (backend/app/data/census.py)
+xlrd==2.0.2

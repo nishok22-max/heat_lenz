@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeatLens — System Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #080d16;
+      color: #f1f5f9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: #0d1524;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .header-icon {
+      font-size: 1.75rem;
+      filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.4));
+    }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+    }
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      margin-left: 0.5rem;
+    }
+    .header-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .btn-icon {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+    .btn-icon:hover {
+      background: #334155;
+      color: #ffffff;
+      border-color: #64748b;
+    }
+    main {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: auto;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: #111a2e;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+    .diagram-container {
+      width: 100%;
+      max-width: 1300px;
+      display: flex;
+      justify-content: center;
+    }
+    .floating-controls {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      background: #1e293b;
+      padding: 0.4rem;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .floating-controls button {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.15s ease;
+    }
+    .floating-controls button:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <span class="header-icon">🏛</span>
+      <h1>System Architecture</h1>
+      <span class="badge">E2E End-to-End Pipeline</span>
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon" onclick="navigator.clipboard.writeText(document.querySelector('.mermaid').textContent); alert('Mermaid code copied!')">
+        <span>⧉</span> Copy Mermaid
+      </button>
+      <button class="btn-icon" onclick="document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()">
+        <span>⤢</span> Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background:#0ea5e9;"></span> 1. Data Ingestion (Cyan)</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span> 2. Physics Engine (Emerald)</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#8b5cf6;"></span> 3. Spatial GIS (Purple)</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> 4. Body Physiology (Amber)</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#14b8a6;"></span> 5. What-If Simulation (Teal)</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span> 6. Decision & Alerts (Rose Red)</div>
+    </div>
+
+    <div class="diagram-container">
+      <pre class="mermaid">
+flowchart LR
+    %% Custom Styling classes
+    classDef c1 fill:#082f49,stroke:#0ea5e9,stroke-width:2px,color:#e0f2fe,font-weight:600;
+    classDef c2 fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#d1fae5,font-weight:600;
+    classDef c3 fill:#3b0764,stroke:#a855f7,stroke-width:2px,color:#f3e8ff,font-weight:600;
+    classDef c4 fill:#451a03,stroke:#f59e0b,stroke-width:2px,color:#fef3c7,font-weight:600;
+    classDef c5 fill:#134e4a,stroke:#14b8a6,stroke-width:2px,color:#ccfbf1,font-weight:600;
+    classDef c6 fill:#4c0519,stroke:#f43f5e,stroke-width:2px,color:#ffe4e6,font-weight:600;
+
+    subgraph S1 ["1. Meteorological Ingestion"]
+        direction TB
+        OM["Open-Meteo & NCMRWF<br/>(Hourly: T, RH, Wind, Sun)"]:::c1
+        MODIS["NASA MODIS Terra/Aqua<br/>(Day & Night LST 1km)"]:::c1
+        STATION["NOAA GSOD 42647<br/>(Airport Station Truth)"]:::c1
+    end
+
+    subgraph S2 ["2. Biometeorological Engine"]
+        direction TB
+        UTCI["Bröde UTCI<br/>(Outdoor Heat Stress)"]:::c2
+        WBGT["Liljegren WBGT<br/>(Solar + Wind Dissipation)"]:::c2
+        HI["NOAA Heat Index<br/>(Sensible + Humidity)"]:::c2
+        Hazard["Composite Hazard Score<br/>(0 - 100 Normalized)"]:::c2
+    end
+
+    subgraph S3 ["3. Spatial & Demographic GIS"]
+        direction TB
+        Wards["AMC 48 Wards<br/>(DataMeet WGS84)"]:::c3
+        Census["Census 2011 & GHS-POP<br/>(Ward Population Density)"]:::c3
+        SJoin["Spatial Fusion Join<br/>(LST Anomaly + Buffer)"]:::c3
+    end
+
+    subgraph S4 ["4. Body Strain & Heat Debt"]
+        direction TB
+        PHS["ISO 7933 PHS<br/>(Core Temp vs. Water Loss)"]:::c4
+        Debt["Nocturnal Heat Debt<br/>(T_night >= 29 °C Carryover)"]:::c4
+        RR["Epidemiological Risk<br/>(de Bont 2024 Relative Risk)"]:::c4
+    end
+
+    subgraph S5 ["5. What-If Interventions"]
+        direction TB
+        Roofs["Cool Roofs<br/>(1.0 - 2.4 °C Indoor Drop)"]:::c5
+        Shifts["Shift Hours<br/>(NDMA 11 AM - 4 PM Rule)"]:::c5
+        Rank["Priority Ranking<br/>(High Heat + Pop Wards)"]:::c5
+    end
+
+    subgraph S6 ["6. Decision & Early Warning"]
+        direction TB
+        HAP["AMC HAP 2019 Rules<br/>(Yellow / Orange / Red)"]:::c6
+        Dash["Leaflet Choropleth<br/>(Interactive 48-Ward Map)"]:::c6
+        CAP["CAP 1.2 XML & SMS<br/>(Multi-Channel Alerts)"]:::c6
+    end
+
+    %% Pipeline Flow
+    OM --> UTCI
+    OM --> WBGT
+    OM --> HI
+    UTCI --> Hazard
+    WBGT --> Hazard
+    HI --> Hazard
+
+    MODIS --> SJoin
+    Wards --> SJoin
+    Census --> SJoin
+
+    Hazard --> PHS
+    OM --> Debt
+    Debt --> PHS
+    Hazard --> RR
+
+    SJoin --> Rank
+    RR --> Rank
+    Roofs --> Rank
+    Shifts --> Rank
+
+    PHS --> HAP
+    Rank --> HAP
+    STATION -.->|Verification| HAP
+    HAP --> Dash
+    HAP --> CAP
+      </pre>
+    </div>
+  </main>
+
+  <div class="floating-controls">
+    <button title="Zoom In" onclick="zoom(1.15)">＋</button>
+    <button title="Zoom Out" onclick="zoom(0.85)">−</button>
+    <button title="Reset Zoom" onclick="resetZoom()">⟲</button>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#080d16',
+        primaryTextColor: '#f8fafc',
+        lineColor: '#64748b'
+      },
+      flowchart: {
+        curve: 'monotoneX',
+        nodeSpacing: 40,
+        rankSpacing: 60
+      }
+    });
+
+    let currentScale = 1;
+    function zoom(factor) {
+      currentScale *= factor;
+      document.querySelector('.mermaid').style.transform = `scale(${currentScale})`;
+      document.querySelector('.mermaid').style.transformOrigin = 'center top';
+    }
+    function resetZoom() {
+      currentScale = 1;
+      document.querySelector('.mermaid').style.transform = `scale(1)`;
+    }
+  </script>
+</body>
+</html>
