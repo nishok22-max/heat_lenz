@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node -e \"const fs=require('fs'); fs.copyFileSync('dist/index.html','dist/404.html');\"",
     "lint": "oxlint",
     "preview": "vite preview",
     "gen:types": "openapi-typescript http://127.0.0.1:8000/openapi.json -o src/types/api.ts"

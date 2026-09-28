@@ -40,4 +40,7 @@ export const router = createBrowserRouter([
     ],
   },
   { path: '/public/:zoneId', element: <PublicView />, errorElement: <RouteError /> },
-])
+], {
+  basename: import.meta.env.BASE_URL,
+})
+

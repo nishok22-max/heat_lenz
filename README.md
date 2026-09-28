@@ -7,12 +7,14 @@
 [![React 19](https://img.shields.io/badge/React-19-61DAFB.svg?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com)
+[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-22c55e.svg?style=for-the-badge&logo=github)](https://nishok22-max.github.io/heat_lenz/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 **Hyperlocal Heatwave Early-Warning & Decision Support System for Ahmedabad**  
 *Problem Statement: 26083 · Team Hydra*
 
-[⚡ Quick Start](#-quick-start) • [🗺️ Features](#-key-features) • [🔬 Science Engine](#-science-engine) • [📡 API Reference](#-interactive-api-reference) • [🐳 Docker](#-docker-deployment)
+[🌐 Live Demo](https://nishok22-max.github.io/heat_lenz/) • [⚡ Quick Start](#-quick-start) • [🗺️ Features](#-key-features) • [🔬 Science Engine](#-science-engine) • [📡 API Reference](#-interactive-api-reference) • [🐳 Docker](#-docker-deployment)
+
 
 </div>
 

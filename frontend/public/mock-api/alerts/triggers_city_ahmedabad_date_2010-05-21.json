@@ -1,0 +1,132 @@
+{
+  "status": "DRY_RUN",
+  "city": "ahmedabad",
+  "date": "2010-05-21",
+  "source": "history",
+  "issued_at": null,
+  "level_basis": "Red Alert - Extreme Heat Alert Day: city max temperature 47.0 C (measured at Ahmedabad airport station, WMO 42647 (NOAA GSOD)) against AMC thresholds (Yellow >= 41.1 C, Orange >= 43.1 C, Red >= 45.0 C; AMC Heat Action Plan 2019 (Easy Read), section IV.A 'Color Signals for Heat Alert', p.3). Context, not used for the level: HeatLens thermal-stress band Extreme; published-heatwave exposure tier heatwave.",
+  "city_ta_max_c": 47.0,
+  "city_ta_max_source": "measured at Ahmedabad airport station, WMO 42647 (NOAA GSOD)",
+  "calibration_status": "not_validated_locally",
+  "groups": [
+    {
+      "level": "Red",
+      "zone_ids": [
+        "ward-48",
+        "ward-47",
+        "ward-46",
+        "ward-45",
+        "ward-44",
+        "ward-43",
+        "ward-42",
+        "ward-41",
+        "ward-40",
+        "ward-39",
+        "ward-38",
+        "ward-37",
+        "ward-36",
+        "ward-35",
+        "ward-34",
+        "ward-33",
+        "ward-32",
+        "ward-31",
+        "ward-30",
+        "ward-29",
+        "ward-28",
+        "ward-27",
+        "ward-26",
+        "ward-25",
+        "ward-24",
+        "ward-23",
+        "ward-22",
+        "ward-21",
+        "ward-20",
+        "ward-19",
+        "ward-18",
+        "ward-17",
+        "ward-16",
+        "ward-15",
+        "ward-14",
+        "ward-13",
+        "ward-12",
+        "ward-11",
+        "ward-10",
+        "ward-09",
+        "ward-08",
+        "ward-07",
+        "ward-06",
+        "ward-05",
+        "ward-04",
+        "ward-03",
+        "ward-02",
+        "ward-01"
+      ],
+      "actions": [
+        {
+          "action_id": "public_awareness",
+          "department": "public",
+          "kind": "public_awareness",
+          "title": "Issue public awareness messages and hydration advisories",
+          "detail": "Send the fixed-template heat advisory (SMS / WhatsApp / CAP) for the affected zones.",
+          "basis": "AMC Heat Action Plan 2019 (Easy Read) section I: public messages via text messages, radio, social media and WhatsApp; SIH PS 26083 required-solution \u00a73.4 (Yellow)"
+        },
+        {
+          "action_id": "facility_readiness_check",
+          "department": "health",
+          "kind": "readiness_check",
+          "title": "Ask health facilities to check heat-illness readiness",
+          "detail": "Confirm ORS stock, cooling capacity and staffing for heat-illness presentations.",
+          "basis": "SIH PS 26083 required-solution \u00a73.4 (Yellow); refs [6], [25]"
+        },
+        {
+          "action_id": "cooling_centres",
+          "department": "municipal",
+          "kind": "cooling_centre_activation",
+          "title": "Activate cooling centres and shelters",
+          "detail": "Open designated cooling centres in the affected zones for the forecast day.",
+          "basis": "AMC Heat Action Plan 2019 (Easy Read) p.5: the Nodal Officer \"activates cooling centers, such as temples, public buildings, malls, during a heat alert\"; SIH PS 26083 required-solution \u00a73.4 (Orange)"
+        },
+        {
+          "action_id": "midday_work_stoppage",
+          "department": "labour",
+          "kind": "work_hours_restriction",
+          "title": "Stop mandatory outdoor work 11:00-16:00; offer shorter shifts",
+          "detail": "For platform/gig and outdoor workers: no mandatory work 11:00-16:00, shorter shifts, a 15-minute cooling break every 90 minutes, and drinking water provided.",
+          "basis": "NDMA gig-worker heat advisory (Mongabay India, Aug 2025), which applies during IMD Orange and Red heat alerts; SIH PS 26083 required-solution \u00a73.4 (Orange), ref [26]"
+        },
+        {
+          "action_id": "hospital_surge_preparation",
+          "department": "health",
+          "kind": "hospital_preparedness",
+          "title": "Hospitals prepare for a rise in heat-illness cases",
+          "detail": "Pre-position staff and beds for heat-illness admissions on the forecast day.",
+          "basis": "SIH PS 26083 required-solution \u00a73.4 (Orange); refs [25], [26]"
+        },
+        {
+          "action_id": "maximum_work_restrictions",
+          "department": "labour",
+          "kind": "work_hours_restriction",
+          "title": "Apply maximum outdoor-work restrictions",
+          "detail": "Extend the Orange restrictions to the maximum permitted; outdoor work only where unavoidable.",
+          "basis": "SIH PS 26083 required-solution \u00a73.4 (Red: all Orange actions plus maximum outdoor-work restrictions)"
+        },
+        {
+          "action_id": "emergency_medical_readiness",
+          "department": "health",
+          "kind": "emergency_readiness",
+          "title": "Put emergency medical services on heat-illness readiness",
+          "detail": "Alert emergency medical services and hospital emergency departments.",
+          "basis": "SIH PS 26083 required-solution \u00a73.4 (Red)"
+        },
+        {
+          "action_id": "power_supply_notice",
+          "department": "power_utility",
+          "kind": "power_supply_protection",
+          "title": "Notify the power utility to protect supply to hospitals and cooling centres",
+          "detail": "Machine-readable notice listing the affected zones and the forecast day. Actual grid action is decided by the utility.",
+          "basis": "SIH PS 26083 required-solution \u00a73.4 (Red) and requirement R6; the document states utility-specific rules are to be agreed locally, so no published protocol is cited"
+        }
+      ]
+    }
+  ]
+}

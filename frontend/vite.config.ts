@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: process.env.GITHUB_PAGES === 'true' || process.env.CI ? '/heat_lenz/' : '/',
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {

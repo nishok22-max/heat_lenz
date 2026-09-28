@@ -1,0 +1,69 @@
+{
+  "zone_id": "ward-44",
+  "date": "2026-09-29",
+  "source": "forecast",
+  "persona": "elderly",
+  "risk_band": "High",
+  "regime": "MODERATE",
+  "recommendations": [
+    {
+      "kind": "hydration",
+      "title": "Increase water intake frequency (every 15-20 minutes if outdoors)",
+      "rationale": "HeatLens score 55.6 (High, uncalibrated), driven by WBGT (Humidity) \u2014 dehydration risk rises with either heat load.",
+      "basis": "NIOSH Heat Stress: Hydration fact sheet (2017): 1 cup (8 oz) of water every 15-20 minutes when working in the heat",
+      "severity": "moderate"
+    },
+    {
+      "kind": "vulnerable_check",
+      "title": "Community health workers to check on elderly residents living alone",
+      "rationale": "Elderly (60+) share 7.9% (Census 2011, Ahmedabad district urban population, the same figure for every ward). Older adults sweat less and store more heat (see the source reviews).",
+      "basis": "Reviews on older adults and heat cited by the HeatLens heat-debt model (PMC12481594; Lancet 2021)",
+      "severity": "moderate"
+    }
+  ],
+  "hap_trigger": "Green",
+  "hap_trigger_basis": "White - No Alert: city max temperature 34.0 C (Open-Meteo forecast) against AMC thresholds (Yellow >= 41.1 C, Orange >= 43.1 C, Red >= 45.0 C; AMC Heat Action Plan 2019 (Easy Read), section IV.A 'Color Signals for Heat Alert', p.3). Context, not used for the level: HeatLens thermal-stress band High; published-heatwave exposure tier below_threshold.",
+  "health": {
+    "evidence": "MODELLED_UNCALIBRATED",
+    "exposure_tier": "below_threshold",
+    "daily_mean_temp_c": 29.54,
+    "threshold_p97_c": 34.7,
+    "intensity_pct": null,
+    "relative_risk": 1.0,
+    "rr_ci_low": 1.0,
+    "rr_ci_high": 1.0,
+    "mri_0_100": 0.0,
+    "calibration_status": "not_validated_locally",
+    "source": "de Bont et al., Environ Int 2024;184:108461 (PMC11790314)",
+    "cross_checks": [
+      {
+        "condition": "daily max temperature >= 40 C",
+        "triggered": false,
+        "effect_pct": 16.0,
+        "source": "Rathi & Sodani 2021, Hyderabad (descriptive; cross-check only)"
+      },
+      {
+        "condition": "Heat Index > 54 C (NWS 'Extreme Danger')",
+        "triggered": false,
+        "effect_pct": 17.0,
+        "source": "Rathi & Sodani 2021, Hyderabad (descriptive; cross-check only)"
+      }
+    ]
+  },
+  "cap_preview": {
+    "identifier": "heatlens-ward-44-2026-09-29",
+    "sender": "heatlens-demo@example.invalid",
+    "sent": "2026-09-28T10:23:29.649198+00:00",
+    "status": "Draft",
+    "msg_type": "Alert",
+    "scope": "Public",
+    "category": "Met",
+    "event": "Heat Advisory",
+    "urgency": "Future",
+    "severity": "Minor",
+    "certainty": "Likely",
+    "headline": "AMC White - No Alert - Khokhra, 2026-09-29",
+    "description": "HeatLens score 55.6 (High), regime MODERATE, dominant driver WBGT (Humidity). Uncalibrated HeatLens composite index - not a validated health-outcome forecast.",
+    "area_desc": "Khokhra"
+  }
+}

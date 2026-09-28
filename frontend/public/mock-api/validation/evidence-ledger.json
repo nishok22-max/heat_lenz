@@ -1,0 +1,244 @@
+{
+  "entries": [
+    {
+      "component": "WBGT, UTCI, Heat Index, wet-bulb",
+      "status": "MODELLED_PUBLISHED",
+      "basis": "Liljegren et al. 2008 / ISO 7243 (WBGT); UTCI (Blazejczyk 2012); NWS Rothfusz Heat Index; Stull 2011 (wet-bulb)",
+      "note": "Published standards, unit-tested. Inputs are point weather from Open-Meteo, not station observations.",
+      "title": "Heat-stress measures (WBGT, UTCI, heat index, wet-bulb)",
+      "code": [
+        "htsi/plan_a_standard_metrics.py"
+      ]
+    },
+    {
+      "component": "Historical weather inputs, 2010-2024",
+      "status": "MEASURED_POINT",
+      "basis": "Open-Meteo archive (reanalysis-based), one point at 23.03 N, 72.58 E",
+      "note": "Reanalysis, not a station record, and one point represents the whole city. Against the Ahmedabad airport station (NOAA GSOD, WMO 42647), March\u2013June 2010\u20132024, its daily maximum runs 1.65 \u00b0C cool on average (mean error 1.92 \u00b0C) and misses about half of the station's AMC alert days. Past AMC alert levels therefore use the station reading (see the alert-temperature row).",
+      "title": "Past weather, 2010\u20132024",
+      "code": []
+    },
+    {
+      "component": "Forecast weather inputs, D+1 to D+5",
+      "status": "MEASURED_FORECAST",
+      "basis": "Open-Meteo forecast API",
+      "note": "Used in this prototype in place of NCMRWF NCUM/NEPS, which need portal registration. Checked against the Ahmedabad airport station with Open-Meteo's archive of past forecasts, March\u2013June 2024 onward: daily-maximum bias within \u00b10.25 \u00b0C and mean error 0.95\u20131.24 \u00b0C at 1\u20135 days ahead; the AMC alert level matches the station's on 83\u201386 % of days.",
+      "title": "Weather forecast, 1\u20135 days ahead",
+      "code": []
+    },
+    {
+      "component": "City max temperature for AMC alert levels",
+      "status": "MEASURED_POINT",
+      "basis": "Past dates: Ahmedabad airport station daily maximum, NOAA NCEI Global Summary of the Day, station 42647099999. Live dates: Open-Meteo forecast.",
+      "note": "A thermometer reading wherever one exists. GSOD derives some daily maxima from synoptic reports (flagged '*'), which can read slightly low. On a past date with no station reading, the reanalysis is used and the alert says so.",
+      "title": "City maximum temperature behind the AMC alert",
+      "code": [
+        "backend/scripts/build_station_verification.py"
+      ]
+    },
+    {
+      "component": "IMD heat-wave classification",
+      "status": "MEASURED_POINT",
+      "basis": "IMD 1-degree gridded Tmax/Tmin normals, 2010-2024",
+      "note": "Used as a consistency check, not a health outcome.",
+      "title": "IMD heat-wave days",
+      "code": []
+    },
+    {
+      "component": "Heat-mortality exposure-response (Ahmedabad)",
+      "status": "MODELLED_PUBLISHED",
+      "basis": "de Bont et al., Environ Int 2024;184:108461 (PMC11790314): +24.9 % (95 % CI 21.7-28.2) on 2-day heatwaves above the local p97",
+      "note": "Peer-reviewed and specific to Ahmedabad. It supports the link between temperature and deaths, not HeatLens's own indices.",
+      "title": "Heat and deaths in Ahmedabad (published study)",
+      "code": []
+    },
+    {
+      "component": "Mortality Risk Index (relative risk, MRI 0-100)",
+      "status": "MODELLED_UNCALIBRATED",
+      "basis": "The de Bont et al. 2024 coefficients applied to a single-point Open-Meteo temperature series",
+      "note": "How closely this series reproduces the study's heatwave statistics is tabulated on this page. The 0\u2013100 scale is a design choice. No count of deaths is produced.",
+      "title": "Mortality risk index (0\u2013100)",
+      "code": []
+    },
+    {
+      "component": "HTSI composite index",
+      "status": "MODELLED_UNCALIBRATED",
+      "basis": "HeatLens's own composite of heat above local norms: daytime WBGT, hot nights, humidity, run length, UTCI and dry heat",
+      "note": "Structural checks only: how it ranks May 2010, and its rank correlation with IMD Tmax. Never compared with health outcomes. Not the HeatLens score shown across the app.",
+      "title": "Composite heat-stress index (HTSI, research component)",
+      "code": [
+        "htsi/plan_b_htsi.py"
+      ]
+    },
+    {
+      "component": "Heat debt / physiological strain (Plan C)",
+      "status": "MODELLED_UNCALIBRATED",
+      "basis": "ISO 7933 predicted heat strain (outdoor worker) and the Gagge\u2013Ji two-node model for older people (Ji et al. 2022)",
+      "note": "Physics-based but not calibrated. The app flags days when the model runs outside its validated range.",
+      "title": "Body heat build-up (heat-debt model)",
+      "code": [
+        "htsi/plan_c_heat_debt.py"
+      ]
+    },
+    {
+      "component": "Regime-aware ensemble score (0-100)",
+      "status": "MODELLED_CALIBRATED",
+      "basis": "HeatLens's own score, combining UTCI, WBGT, unusual heat for the season and heat built up over hot nights; its meaning in deaths is fitted to the May 2010 Ahmedabad heatwave",
+      "note": "Fitted to real daily deaths for one event, the 31 days of May 2010: deaths as a multiple of a normal May day, with a bootstrap interval, for scores 69\u201397 only (outside that range, no estimate). On those days it predicts deaths about as well as the airport thermometer: slightly worse on the same day, slightly better when the day before is counted. Not tested on any other year. Its weights, regimes and band cut-offs are still hand-set. A logistic regression on IMD heat-wave days runs at startup, but its result is never used by the score.",
+      "title": "HeatLens heat-stress score (0\u2013100)",
+      "code": [
+        "htsi/plan_d_ensemble.py",
+        "backend/scripts/calibrate_score.py",
+        "results/score_calibration.json"
+      ]
+    },
+    {
+      "component": "Daily deaths, Ahmedabad, May 2010",
+      "status": "MEASURED_POINT",
+      "basis": "Azhar GS et al., PLoS ONE 2014;9(3):e91831, Figures 1-2 (PLOS figshare)",
+      "note": "The only public day-by-day Ahmedabad death counts found; the multi-year series is available on request only. Read from the published charts: the 2010 read-off sums to the published 4,462 deaths, the 2009/2011 reference is within 0.7 % of the published 3,118, and two independent charts agree to about 1 death a day.",
+      "title": "Daily deaths in Ahmedabad, May 2010",
+      "code": [
+        "backend/scripts/digitize_azhar2014.py",
+        "datasets/health/ahmedabad_may2010_daily_deaths.csv"
+      ]
+    },
+    {
+      "component": "Heat Action Plan level thresholds",
+      "status": "MODELLED_PUBLISHED",
+      "basis": "AMC Heat Action Plan 2019 (Easy Read), section IV.A 'Color Signals for Heat Alert', p.3: White \u2264 41 \u00b0C, Yellow 41.1\u201343 \u00b0C, Orange 43.1\u201344.9 \u00b0C, Red \u2265 45 \u00b0C, on the day's maximum temperature",
+      "note": "Ahmedabad's own published thresholds, used exactly as written: one level for the whole city each day. HeatLens heat stress and the mortality signal are shown beside the level and never change it.",
+      "title": "Official AMC alert levels",
+      "code": [
+        "backend/rules/hap_rules.toml"
+      ]
+    },
+    {
+      "component": "Elderly population share",
+      "status": "MEASURED_CENSUS",
+      "basis": "Census 2011 table C-13, Ahmadabad district, urban population: 480,980 aged 60+ of 6,063,047 (7.93 %)",
+      "note": "The closest area to AMC that table C-13 covers (AMC's 5.58 million is about 92 % of the district's urban population). No ward-level age table exists, so every ward shows this same figure.",
+      "title": "Share of people aged 60+",
+      "code": []
+    },
+    {
+      "component": "Ward population",
+      "status": "MODELLED_PUBLISHED",
+      "basis": "JRC GHS-POP R2023A, 2020, 100 m grid, summed over each of the 48 ward boundaries: 7,334,231 in total, 15,155 to 657,559 per ward",
+      "note": "A published model that spreads census counts over built-up land, not a headcount. Census 2011 counts the 57 wards of 2011 (AMC total 5,577,940); no boundary file maps those onto today's 48 wards, so that table is kept as a city-total cross-check only.",
+      "title": "People per ward",
+      "code": [
+        "backend/scripts/build_ward_population.py",
+        "datasets/census/"
+      ]
+    },
+    {
+      "component": "City population",
+      "status": "MEASURED_CENSUS",
+      "basis": "Census of India 2011, Primary Census Abstract (town/village/ward), District Ahmadabad, DDW_PCA2407_2011_MDDS: Ahmadabad (M Corp.) 5,577,940",
+      "note": "Read directly from the official file; its 57 ward rows sum exactly to this total.",
+      "title": "City population, Census 2011",
+      "code": []
+    },
+    {
+      "component": "City population, latest estimate",
+      "status": "MODELLED_PUBLISHED",
+      "basis": "UN DESA Population Division, World Urbanization Prospects 2025, File 21: city of Ahmedabad, 7,667,167 in 2026 (7,632,408 in 2025)",
+      "note": "An estimate, not a count: India has had no census since 2011 (Census 2027 counts people in February 2027; checked on censusindia.gov.in, 23 Sep 2026). The UN city covers the whole built-up area, including suburbs outside AMC, so it is larger than the Census AMC figure (UN 2011: 6.34 million; Census AMC: 5.58 million).",
+      "title": "City population, latest estimate",
+      "code": [
+        "backend/scripts/build_un_city_population.py",
+        "backend/app/data/un_wup2025_ahmedabad.json"
+      ]
+    },
+    {
+      "component": "Administrative ward boundaries",
+      "status": "MEASURED_GEODATA",
+      "basis": "48 AMC ward boundaries from DataMeet (CC BY 4.0), retrieved 22 Sep 2026. Total area about 442 km\u00b2, against a municipal area quoted at roughly 465\u2013505 km\u00b2: consistent.",
+      "note": "Community-sourced, not an official AMC release. If AMC publishes an official boundary file, that one should be used instead.",
+      "title": "Ward boundaries",
+      "code": [
+        "datasets/geo/README.md"
+      ]
+    },
+    {
+      "component": "Zone-to-zone surface temperature differences",
+      "status": "MEASURED_SATELLITE",
+      "basis": "MODIS land-surface temperature (MOD11A2.061 + MYD11A2.061, day and night, March\u2013June 2022\u20132026, Microsoft Planetary Computer) for all 48 wards. 47 wards average the pixels centred inside them; one ward smaller than a pixel (1.9 km\u00b2) averages the pixels it overlaps.",
+      "note": "Shown as its own measured layer on the map. It is the temperature of the ground and roofs, not of the air, and it is NOT converted into ward air temperature, WBGT, UTCI or the HeatLens score.",
+      "title": "Ground temperature by ward (satellite)",
+      "code": [
+        "backend/scripts/build_lst_offsets.py"
+      ]
+    },
+    {
+      "component": "Zone-to-zone air temperature and thermal-index differences",
+      "status": "MEASURED_FORECAST",
+      "basis": "Live and forecast dates: the Open-Meteo forecast at every ward's centre. The 48 wards fall in 8 weather-model grid cells; each cell runs through the full chain (air temperature, WBGT, UTCI, heat build-up, HeatLens score, mortality risk). Example, 23 Sep 2026: air maximum 34.6\u201335.7 \u00b0C and score 63\u201367 across cells.",
+      "note": "Weather-model resolution, not a station network: wards in the same grid cell share values, and each ward says which cell it uses and how many wards share it. Past dates (the 2010\u20132024 replay) use one city-level point for every ward. Real ward-level air temperature would need local stations.",
+      "title": "Air temperature and heat stress by ward",
+      "code": [
+        "backend/app/services/forecast.py"
+      ]
+    },
+    {
+      "component": "Absolute mortality or hospitalisation counts",
+      "status": "NOT_AVAILABLE",
+      "basis": "Daily Ahmedabad outcome data is confidential (de Bont et al. data-availability statement)",
+      "note": "Would need a calibration that does not exist. HeatLens gives relative risk only.",
+      "title": "Counts of deaths or hospital admissions",
+      "code": []
+    },
+    {
+      "component": "SMS / WhatsApp delivery",
+      "status": "NOT_AVAILABLE",
+      "basis": "No gateway configured",
+      "note": "Messages are previews stamped SIMULATED. A real gateway needs a DLT-registered sender and approved templates.",
+      "title": "SMS / WhatsApp delivery",
+      "code": []
+    },
+    {
+      "component": "CAP feed to SACHET; department webhooks",
+      "status": "NOT_AVAILABLE",
+      "basis": "CAP 1.2 alert and notification previews only",
+      "note": "Status is always Draft. Nothing is sent anywhere.",
+      "title": "Alert feed to SACHET; department notifications",
+      "code": []
+    },
+    {
+      "component": "Climate projections (e.g. 2035)",
+      "status": "NOT_AVAILABLE",
+      "basis": "Out of scope",
+      "note": "Not built and not shown.",
+      "title": "Climate projections",
+      "code": []
+    },
+    {
+      "component": "Intervention effects (cool roofs, greening, work hours)",
+      "status": "MODELLED_PUBLISHED",
+      "basis": "Cool roofs: MHT / IIPH Gandhinagar field study, 16 Ahmedabad slum homes, Oct 2017 (Vellingiri et al., Indian J Occup Environ Med 2020;24:25-29). Parks: Bowler et al. 2010 meta-analysis, Landscape and Urban Planning 97:147-155. Work hours: NDMA outdoor-worker advisory.",
+      "note": "Each finding is shown with what it actually measured (indoor air under one roof; a park against its surroundings). None measures an effect across a whole ward, so HeatLens does not project a changed ward score. Effects without a verifiable source are not shown.",
+      "title": "What interventions achieve (cool roofs, parks, work hours)",
+      "code": []
+    },
+    {
+      "component": "Outdoor work time limits (minutes per hour)",
+      "status": "NOT_AVAILABLE",
+      "basis": "The ACGIH TLV / NIOSH work-rest tables could not be retrieved from a primary source (OSHA Technical Manual page unavailable; CDC PDF blocked to scripted access, 23 Sep 2026)",
+      "note": "Not shown. Outdoor-work guidance follows the NDMA rule tied to the AMC alert level.",
+      "title": "Outdoor work limits in minutes per hour",
+      "code": []
+    },
+    {
+      "component": "Ward land cover and 'why is it hot here' reasons",
+      "status": "MEASURED_SATELLITE",
+      "basis": "ESA WorldCover 10 m 2021 v200 (Zanaga et al. 2022, doi:10.5281/zenodo.7254221), per ward. City average: 55.5 % buildings and roads, 11.0 % trees, 22.8 % farmland.",
+      "note": "Across the 48 wards, more buildings go with warmer ground at night (r = 0.92), farmland with cooler nights (r = \u22120.97), and trees with cooler ground (r = \u22120.35 by day, \u22120.6 at night); buildings barely relate to daytime ground heat (r = 0.16). A land-cover reason is given only when |r| \u2265 0.3 and the ward's own measured ground temperature points the same way. A correlation across wards, not a controlled experiment.",
+      "title": "Land cover by ward, and why a ward runs hot",
+      "code": [
+        "backend/scripts/build_ward_landcover.py",
+        "backend/app/services/explain.py"
+      ]
+    }
+  ]
+}

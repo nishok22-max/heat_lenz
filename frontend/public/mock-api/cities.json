@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ahmedabad",
+    "name": "Ahmedabad",
+    "lat": 23.03,
+    "lon": 72.58,
+    "tz": "Asia/Kolkata",
+    "zone_count": 48,
+    "date_range": {
+      "start": "2010-03-01",
+      "end": "2024-06-30"
+    }
+  }
+]

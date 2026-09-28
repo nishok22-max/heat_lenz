@@ -1,0 +1,890 @@
+{
+  "index_calibrated_against_health_outcomes": true,
+  "reason": "The HeatLens score is calibrated against real deaths for one event: the 31 days of the May 2010 heatwave, the only day-by-day Ahmedabad death counts in the public record (read from the published figures of Azhar et al. 2014). The multi-year comparison still needs a daily mortality series, which is available only on request.",
+  "what_was_tested": [
+    "The HeatLens score against real daily deaths, May 2010 (31 days, read from the published figures of Azhar et al. 2014): each +10 points meant about +38 % deaths (valid for scores 69-97). Leave-one-day-out error 20.4 deaths/day, against 19.2 for the airport thermometer on the same days.",
+    "May 2010 (the ~1,344 excess-death event) ranked against the other 14 years for each index. This is in-sample: the indices were shaped with that event in view, so it is a sanity check, not evidence that they would have warned about an event they were not built around.",
+    "Year-to-year rank correlation of each index against IMD Tmax.",
+    "False-alarm and missed-event rates against IMD heat-wave days. This is a consistency check: IMD heat-wave days are not health outcomes.",
+    "How closely the point temperature series reproduces the heatwave statistics of the study the mortality coefficients come from (five metrics, tabulated below).",
+    "Daily max temperature against a real thermometer (Ahmedabad airport, NOAA GSOD): the 2010-2024 history, and archived forecasts at 1-5 days ahead. Tabulated below."
+  ],
+  "what_was_not_tested": [
+    "Whether the score predicts deaths better than WBGT, UTCI or Tmax over many years: only one event (May 2010) has public daily deaths, and on it the airport thermometer did slightly better same-day.",
+    "The score's internal weights and band cut-offs: still hand-set; only its meaning in deaths is fitted.",
+    "Ward-level air temperature: every ward has a measured MODIS ground-temperature difference, but ground and air temperature differ, and there is no ward-level station or health record to check a ward's air temperature or heat stress against.",
+    "Local calibration of the relative-risk model. The coefficients are published, not fitted here."
+  ],
+  "benchmark": {
+    "scope": "**Scope:** Structural comparison on Ahmedabad 2010-2024 (March-June, ERA5 reanalysis). No daily health outcomes are available. Metrics below are proxy measures. Statistical superiority claims require `compare_indices()` on real mortality/admission data. IMD heat-wave days are NOT health outcomes. This is a consistency check only.",
+    "tables": [
+      {
+        "key": "may2010_rank",
+        "title": "May 2010 rank among 15 years (rank 1 = correctly flagged as the worst May)",
+        "columns": [
+          "index",
+          "may2010_mean",
+          "all_may_mean",
+          "may2010_rank"
+        ],
+        "rows": [
+          {
+            "index": "Tmax (degC)",
+            "may2010_mean": 42.61,
+            "all_may_mean": 40.86,
+            "may2010_rank": 2.0
+          },
+          {
+            "index": "IMD Tmax (degC)",
+            "may2010_mean": 41.73,
+            "all_may_mean": 40.0,
+            "may2010_rank": 1.0
+          },
+          {
+            "index": "Heat Index (degC)",
+            "may2010_mean": 42.32,
+            "all_may_mean": 41.05,
+            "may2010_rank": 2.0
+          },
+          {
+            "index": "WBGT (degC)",
+            "may2010_mean": 32.22,
+            "all_may_mean": 32.15,
+            "may2010_rank": 7.0
+          },
+          {
+            "index": "UTCI (degC)",
+            "may2010_mean": 53.68,
+            "all_may_mean": 51.9,
+            "may2010_rank": 2.0
+          },
+          {
+            "index": "HTSI basic",
+            "may2010_mean": 2.5,
+            "all_may_mean": 3.6,
+            "may2010_rank": 7.0
+          },
+          {
+            "index": "HTSI+UTCI",
+            "may2010_mean": 8.58,
+            "all_may_mean": 5.73,
+            "may2010_rank": 3.0
+          },
+          {
+            "index": "HTSI+X (dry-heat)",
+            "may2010_mean": 7.99,
+            "all_may_mean": 5.5,
+            "may2010_rank": 3.0
+          },
+          {
+            "index": "HTSI+UTCI+X (full)",
+            "may2010_mean": 13.22,
+            "all_may_mean": 7.37,
+            "may2010_rank": 2.0
+          },
+          {
+            "index": "PHD (Plan C)",
+            "may2010_mean": 86.27,
+            "all_may_mean": 76.56,
+            "may2010_rank": 3.0
+          }
+        ]
+      },
+      {
+        "key": "spearman_vs_imd_tmax",
+        "title": "Rank correlation of each index's May mean with IMD Tmax across years",
+        "columns": [
+          "index",
+          "spearman_rho",
+          "p_value"
+        ],
+        "rows": [
+          {
+            "index": "IMD Tmax (degC)",
+            "spearman_rho": 1.0,
+            "p_value": 0.0
+          },
+          {
+            "index": "UTCI (degC)",
+            "spearman_rho": 0.825,
+            "p_value": 0.0002
+          },
+          {
+            "index": "Tmax (degC)",
+            "spearman_rho": 0.786,
+            "p_value": 0.0005
+          },
+          {
+            "index": "PHD (Plan C)",
+            "spearman_rho": 0.768,
+            "p_value": 0.0008
+          },
+          {
+            "index": "Heat Index (degC)",
+            "spearman_rho": 0.661,
+            "p_value": 0.0073
+          },
+          {
+            "index": "WBGT (degC)",
+            "spearman_rho": 0.411,
+            "p_value": 0.1283
+          },
+          {
+            "index": "HTSI+UTCI+X (full)",
+            "spearman_rho": 0.289,
+            "p_value": 0.2957
+          },
+          {
+            "index": "HTSI+UTCI",
+            "spearman_rho": 0.182,
+            "p_value": 0.5159
+          },
+          {
+            "index": "HTSI+X (dry-heat)",
+            "spearman_rho": 0.164,
+            "p_value": 0.5585
+          },
+          {
+            "index": "HTSI basic",
+            "spearman_rho": -0.039,
+            "p_value": 0.8894
+          }
+        ]
+      },
+      {
+        "key": "false_alarm_missed_event",
+        "title": "False-alarm and missed-event rate against IMD heat-wave days",
+        "columns": [
+          "index",
+          "flagged_days",
+          "imd_hw_days",
+          "false_alarm_rate",
+          "missed_event_rate"
+        ],
+        "rows": [
+          {
+            "index": "Tmax (degC)",
+            "flagged_days": 657.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 0.992,
+            "missed_event_rate": 0.0
+          },
+          {
+            "index": "IMD Tmax (degC)",
+            "flagged_days": 402.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 0.988,
+            "missed_event_rate": 0.0
+          },
+          {
+            "index": "Heat Index (degC)",
+            "flagged_days": 19.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 0.947,
+            "missed_event_rate": 0.8
+          },
+          {
+            "index": "WBGT (degC)",
+            "flagged_days": 300.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 0.99,
+            "missed_event_rate": 0.4
+          },
+          {
+            "index": "UTCI (degC)",
+            "flagged_days": 225.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 0.991,
+            "missed_event_rate": 0.6
+          },
+          {
+            "index": "HTSI basic",
+            "flagged_days": 24.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 1.0,
+            "missed_event_rate": 1.0
+          },
+          {
+            "index": "HTSI+UTCI",
+            "flagged_days": 34.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 1.0,
+            "missed_event_rate": 1.0
+          },
+          {
+            "index": "HTSI+X (dry-heat)",
+            "flagged_days": 30.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 1.0,
+            "missed_event_rate": 1.0
+          },
+          {
+            "index": "HTSI+UTCI+X (full)",
+            "flagged_days": 48.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 1.0,
+            "missed_event_rate": 1.0
+          },
+          {
+            "index": "PHD (Plan C)",
+            "flagged_days": 1453.0,
+            "imd_hw_days": 5.0,
+            "false_alarm_rate": 0.997,
+            "missed_event_rate": 0.0
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "All improvements are **structural**, not **health-validated**.",
+      "The correct public claim: 'HTSI+UTCI+X (full) ranks the May 2010 event at rank 2 of 15 years;"
+    ]
+  },
+  "health_model": {
+    "evidence": "MODELLED_UNCALIBRATED",
+    "definition": "Heatwave day: a day within a run of >= 2 consecutive days whose daily mean temperature exceeds the annual 97th percentile (de Bont et al. 2024, unchanged).",
+    "threshold_p97_c": 34.7,
+    "threshold_basis": "Annual p97 of daily mean temperature, all days 2010-2024, one Open-Meteo point (23.03 N, 72.58 E).",
+    "base_effect_pct": 24.9,
+    "base_ci_pct": [
+      21.7,
+      28.2
+    ],
+    "intensity_slope_pct_per_pct": 3.8,
+    "intensity_slope_ci": [
+      2.8,
+      4.7
+    ],
+    "intensity_centre_pct": 2.4,
+    "mri_definition": "MRI = 100 x (RR - 1) / (RR_max - 1), where RR_max is the relative risk at the highest heatwave intensity in the 2010-2024 record (11.4 % above threshold, RR 1.59). 0 = no published heatwave exposure. A design choice for mapping, not a published scale.",
+    "reference_stats": [
+      {
+        "name": "Heatwaves per year",
+        "published": 3.1,
+        "reproduced": 2.73,
+        "unit": "per year"
+      },
+      {
+        "name": "Mean heatwave length",
+        "published": 4.1,
+        "reproduced": 3.73,
+        "unit": "days"
+      },
+      {
+        "name": "Heatwave days per year (waves x length)",
+        "published": 12.7,
+        "reproduced": 10.2,
+        "unit": "days/yr"
+      },
+      {
+        "name": "Mean heatwave temperature",
+        "published": 36.8,
+        "reproduced": 35.56,
+        "unit": "deg C"
+      },
+      {
+        "name": "Mean intensity above p97",
+        "published": 2.4,
+        "reproduced": 2.47,
+        "unit": "%"
+      }
+    ],
+    "deviations": [
+      "Exposure series is one Open-Meteo point, not the study's ERA5 0.25-degree grid mean over the municipal boundary; the reproduction table shows how close the resulting heatwave statistics are.",
+      "The published intensity modifier is per heatwave-MEAN intensity. HeatLens applies it to each day's own intensity, centred on the study's mean, so the index responds daily.",
+      "Intervals for graded values shift the base CI by the modifier's CI bounds and ignore their covariance. This approximation is not a published interval.",
+      "Intensity is capped at the highest value seen in the reference record (11.4 %): no extrapolation beyond observed exposure.",
+      "One threshold for the whole record (annual p97 over all years), not a per-year percentile."
+    ],
+    "not_modelled": [
+      "Absolute deaths or admissions: daily outcome data for Ahmedabad is confidential and not held, so no calibration exists. Relative risk only.",
+      "Hospitalisation-spike forecast: needs a daily heat-illness admissions series (NCDC/IHIP).",
+      "Ward vulnerability adjustment: no ward-level age or worker data for Ahmedabad is in this repo.",
+      "Distributed-lag (DLNM) fitting: needs daily outcome data. The cited Hyderabad study finds the association peaks at lag 0, which is consistent with same-day scoring but is not a fitted lag model."
+    ],
+    "citation": "de Bont et al., Environ Int 2024;184:108461 (PMC11790314)"
+  },
+  "outcome_validation": {
+    "status": "not_run",
+    "data_source": null,
+    "evidence_status": null,
+    "report": null,
+    "how_to_run": "python backend/scripts/run_validation.py --outcomes <daily_deaths.csv> --source \"<who supplied it, period>\" --population <city population>"
+  },
+  "station_verification": {
+    "station_name": "Ahmedabad airport (WMO 42647)",
+    "source": "NOAA NCEI Global Summary of the Day, daily MAX temperature",
+    "season": "March-June",
+    "retrieved": "2026-09-23",
+    "caveats": [
+      "One station, about 6 km from the model point: this checks the city-level input, not ward-to-ward differences.",
+      "GSOD daily MAX is sometimes derived from synoptic reports (flag '*'), which can read slightly below the true daily maximum.",
+      "1623 of 1892 station days carry that flag."
+    ],
+    "history_model": "Open-Meteo archive (reanalysis) as served by HeatLens, 2010-2024",
+    "history": {
+      "n_days": 1771,
+      "bias_c": -1.65,
+      "mae_c": 1.92,
+      "rmse_c": 2.27,
+      "pearson_r": 0.907,
+      "amc_level_agreement_pct": 70.1,
+      "station_alert_days": 647,
+      "station_alert_days_model_missed": 321
+    },
+    "forecast_model": "Open-Meteo forecast, Previous Runs API (temperature_2m_previous_dayN), March-June 2024 onward",
+    "forecast_leads": {
+      "1": {
+        "n_days": 237,
+        "bias_c": -0.06,
+        "mae_c": 0.95,
+        "rmse_c": 1.42,
+        "pearson_r": 0.933,
+        "amc_level_agreement_pct": 85.7,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 14
+      },
+      "2": {
+        "n_days": 237,
+        "bias_c": -0.03,
+        "mae_c": 1.08,
+        "rmse_c": 1.62,
+        "pearson_r": 0.916,
+        "amc_level_agreement_pct": 84.8,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 15
+      },
+      "3": {
+        "n_days": 237,
+        "bias_c": 0.09,
+        "mae_c": 1.16,
+        "rmse_c": 1.72,
+        "pearson_r": 0.905,
+        "amc_level_agreement_pct": 82.7,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 13
+      },
+      "4": {
+        "n_days": 237,
+        "bias_c": 0.21,
+        "mae_c": 1.13,
+        "rmse_c": 1.73,
+        "pearson_r": 0.904,
+        "amc_level_agreement_pct": 84.8,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 9
+      },
+      "5": {
+        "n_days": 237,
+        "bias_c": 0.15,
+        "mae_c": 1.24,
+        "rmse_c": 1.82,
+        "pearson_r": 0.89,
+        "amc_level_agreement_pct": 85.2,
+        "station_alert_days": 55,
+        "station_alert_days_model_missed": 12
+      }
+    }
+  },
+  "score_calibration": {
+    "_comment": "backend/scripts/calibrate_score.py - HeatLens score calibrated against real daily deaths.",
+    "data": {
+      "source": "Azhar GS et al., PLoS ONE 2014;9(3):e91831, Figures 1-2 (daily counts read from the published charts)",
+      "period": [
+        "2010-05-01",
+        "2010-05-31"
+      ],
+      "n_days": 31,
+      "deaths_total": 4462,
+      "reference": "same day, average of May 2009 and May 2011 (the paper's own reference)"
+    },
+    "model": "deaths ~ Poisson(reference x exp(a + b x score)), same-day score; 2,000 bootstrap resamples of days",
+    "a": -2.27091,
+    "b_per_score_point": 0.03253,
+    "b_ci": [
+      0.02331,
+      0.03934
+    ],
+    "extra_deaths_pct_per_10_points": 38.4,
+    "calibrated_range": [
+      69.0,
+      97.0
+    ],
+    "curve": [
+      {
+        "score": 69.0,
+        "death_ratio": 0.974,
+        "ci_low": 0.885,
+        "ci_high": 1.075
+      },
+      {
+        "score": 70.0,
+        "death_ratio": 1.006,
+        "ci_low": 0.919,
+        "ci_high": 1.103
+      },
+      {
+        "score": 71.0,
+        "death_ratio": 1.039,
+        "ci_low": 0.954,
+        "ci_high": 1.132
+      },
+      {
+        "score": 72.0,
+        "death_ratio": 1.074,
+        "ci_low": 0.992,
+        "ci_high": 1.161
+      },
+      {
+        "score": 73.0,
+        "death_ratio": 1.109,
+        "ci_low": 1.029,
+        "ci_high": 1.192
+      },
+      {
+        "score": 74.0,
+        "death_ratio": 1.146,
+        "ci_low": 1.068,
+        "ci_high": 1.224
+      },
+      {
+        "score": 75.0,
+        "death_ratio": 1.184,
+        "ci_low": 1.108,
+        "ci_high": 1.258
+      },
+      {
+        "score": 76.0,
+        "death_ratio": 1.223,
+        "ci_low": 1.148,
+        "ci_high": 1.296
+      },
+      {
+        "score": 77.0,
+        "death_ratio": 1.263,
+        "ci_low": 1.189,
+        "ci_high": 1.336
+      },
+      {
+        "score": 78.0,
+        "death_ratio": 1.305,
+        "ci_low": 1.23,
+        "ci_high": 1.376
+      },
+      {
+        "score": 79.0,
+        "death_ratio": 1.348,
+        "ci_low": 1.272,
+        "ci_high": 1.422
+      },
+      {
+        "score": 80.0,
+        "death_ratio": 1.393,
+        "ci_low": 1.311,
+        "ci_high": 1.469
+      },
+      {
+        "score": 81.0,
+        "death_ratio": 1.439,
+        "ci_low": 1.349,
+        "ci_high": 1.518
+      },
+      {
+        "score": 82.0,
+        "death_ratio": 1.487,
+        "ci_low": 1.388,
+        "ci_high": 1.571
+      },
+      {
+        "score": 83.0,
+        "death_ratio": 1.536,
+        "ci_low": 1.424,
+        "ci_high": 1.627
+      },
+      {
+        "score": 84.0,
+        "death_ratio": 1.587,
+        "ci_low": 1.461,
+        "ci_high": 1.685
+      },
+      {
+        "score": 85.0,
+        "death_ratio": 1.639,
+        "ci_low": 1.5,
+        "ci_high": 1.747
+      },
+      {
+        "score": 86.0,
+        "death_ratio": 1.693,
+        "ci_low": 1.539,
+        "ci_high": 1.812
+      },
+      {
+        "score": 87.0,
+        "death_ratio": 1.749,
+        "ci_low": 1.578,
+        "ci_high": 1.88
+      },
+      {
+        "score": 88.0,
+        "death_ratio": 1.807,
+        "ci_low": 1.619,
+        "ci_high": 1.951
+      },
+      {
+        "score": 89.0,
+        "death_ratio": 1.867,
+        "ci_low": 1.659,
+        "ci_high": 2.026
+      },
+      {
+        "score": 90.0,
+        "death_ratio": 1.928,
+        "ci_low": 1.7,
+        "ci_high": 2.103
+      },
+      {
+        "score": 91.0,
+        "death_ratio": 1.992,
+        "ci_low": 1.742,
+        "ci_high": 2.184
+      },
+      {
+        "score": 92.0,
+        "death_ratio": 2.058,
+        "ci_low": 1.783,
+        "ci_high": 2.269
+      },
+      {
+        "score": 93.0,
+        "death_ratio": 2.126,
+        "ci_low": 1.826,
+        "ci_high": 2.356
+      },
+      {
+        "score": 94.0,
+        "death_ratio": 2.196,
+        "ci_low": 1.871,
+        "ci_high": 2.447
+      },
+      {
+        "score": 95.0,
+        "death_ratio": 2.269,
+        "ci_low": 1.916,
+        "ci_high": 2.544
+      },
+      {
+        "score": 96.0,
+        "death_ratio": 2.344,
+        "ci_low": 1.962,
+        "ci_high": 2.643
+      },
+      {
+        "score": 97.0,
+        "death_ratio": 2.422,
+        "ci_low": 2.008,
+        "ci_high": 2.748
+      }
+    ],
+    "days": [
+      {
+        "date": "2010-05-01",
+        "score": 70.8,
+        "deaths": 101,
+        "reference": 109,
+        "death_ratio": 0.927
+      },
+      {
+        "date": "2010-05-02",
+        "score": 77.4,
+        "deaths": 120,
+        "reference": 103,
+        "death_ratio": 1.165
+      },
+      {
+        "date": "2010-05-03",
+        "score": 74.7,
+        "deaths": 141,
+        "reference": 92,
+        "death_ratio": 1.533
+      },
+      {
+        "date": "2010-05-04",
+        "score": 71.4,
+        "deaths": 110,
+        "reference": 105,
+        "death_ratio": 1.048
+      },
+      {
+        "date": "2010-05-05",
+        "score": 69.2,
+        "deaths": 115,
+        "reference": 96,
+        "death_ratio": 1.198
+      },
+      {
+        "date": "2010-05-06",
+        "score": 70.1,
+        "deaths": 108,
+        "reference": 94,
+        "death_ratio": 1.149
+      },
+      {
+        "date": "2010-05-07",
+        "score": 72.0,
+        "deaths": 125,
+        "reference": 104,
+        "death_ratio": 1.202
+      },
+      {
+        "date": "2010-05-08",
+        "score": 74.9,
+        "deaths": 120,
+        "reference": 105,
+        "death_ratio": 1.143
+      },
+      {
+        "date": "2010-05-09",
+        "score": 77.4,
+        "deaths": 131,
+        "reference": 112,
+        "death_ratio": 1.17
+      },
+      {
+        "date": "2010-05-10",
+        "score": 73.2,
+        "deaths": 118,
+        "reference": 111,
+        "death_ratio": 1.063
+      },
+      {
+        "date": "2010-05-11",
+        "score": 74.0,
+        "deaths": 122,
+        "reference": 94,
+        "death_ratio": 1.298
+      },
+      {
+        "date": "2010-05-12",
+        "score": 80.0,
+        "deaths": 125,
+        "reference": 96,
+        "death_ratio": 1.302
+      },
+      {
+        "date": "2010-05-13",
+        "score": 81.5,
+        "deaths": 127,
+        "reference": 84,
+        "death_ratio": 1.512
+      },
+      {
+        "date": "2010-05-14",
+        "score": 80.0,
+        "deaths": 134,
+        "reference": 105,
+        "death_ratio": 1.276
+      },
+      {
+        "date": "2010-05-15",
+        "score": 73.1,
+        "deaths": 122,
+        "reference": 98,
+        "death_ratio": 1.245
+      },
+      {
+        "date": "2010-05-16",
+        "score": 73.8,
+        "deaths": 135,
+        "reference": 87,
+        "death_ratio": 1.552
+      },
+      {
+        "date": "2010-05-17",
+        "score": 76.6,
+        "deaths": 116,
+        "reference": 101,
+        "death_ratio": 1.149
+      },
+      {
+        "date": "2010-05-18",
+        "score": 78.4,
+        "deaths": 104,
+        "reference": 102,
+        "death_ratio": 1.02
+      },
+      {
+        "date": "2010-05-19",
+        "score": 85.5,
+        "deaths": 156,
+        "reference": 104,
+        "death_ratio": 1.5
+      },
+      {
+        "date": "2010-05-20",
+        "score": 95.6,
+        "deaths": 201,
+        "reference": 107,
+        "death_ratio": 1.879
+      },
+      {
+        "date": "2010-05-21",
+        "score": 96.2,
+        "deaths": 308,
+        "reference": 109,
+        "death_ratio": 2.826
+      },
+      {
+        "date": "2010-05-22",
+        "score": 94.9,
+        "deaths": 248,
+        "reference": 105,
+        "death_ratio": 2.362
+      },
+      {
+        "date": "2010-05-23",
+        "score": 92.7,
+        "deaths": 228,
+        "reference": 105,
+        "death_ratio": 2.171
+      },
+      {
+        "date": "2010-05-24",
+        "score": 91.0,
+        "deaths": 202,
+        "reference": 79,
+        "death_ratio": 2.557
+      },
+      {
+        "date": "2010-05-25",
+        "score": 85.9,
+        "deaths": 174,
+        "reference": 113,
+        "death_ratio": 1.54
+      },
+      {
+        "date": "2010-05-26",
+        "score": 83.1,
+        "deaths": 170,
+        "reference": 94,
+        "death_ratio": 1.809
+      },
+      {
+        "date": "2010-05-27",
+        "score": 82.5,
+        "deaths": 132,
+        "reference": 94,
+        "death_ratio": 1.404
+      },
+      {
+        "date": "2010-05-28",
+        "score": 83.7,
+        "deaths": 121,
+        "reference": 114,
+        "death_ratio": 1.061
+      },
+      {
+        "date": "2010-05-29",
+        "score": 78.2,
+        "deaths": 147,
+        "reference": 109,
+        "death_ratio": 1.349
+      },
+      {
+        "date": "2010-05-30",
+        "score": 74.9,
+        "deaths": 109,
+        "reference": 101,
+        "death_ratio": 1.079
+      },
+      {
+        "date": "2010-05-31",
+        "score": 71.7,
+        "deaths": 92,
+        "reference": 108,
+        "death_ratio": 0.852
+      }
+    ],
+    "comparison": [
+      {
+        "measure": "HeatLens score",
+        "timing": "same day",
+        "loo_mae_deaths_per_day": 20.4,
+        "spearman_with_death_ratio": 0.68,
+        "used_for_calibration": true
+      },
+      {
+        "measure": "HeatLens score",
+        "timing": "same day + day before",
+        "loo_mae_deaths_per_day": 18.1,
+        "spearman_with_death_ratio": 0.68,
+        "used_for_calibration": false
+      },
+      {
+        "measure": "Airport thermometer (daily max)",
+        "timing": "same day",
+        "loo_mae_deaths_per_day": 19.2,
+        "spearman_with_death_ratio": 0.77,
+        "used_for_calibration": false
+      },
+      {
+        "measure": "Airport thermometer (daily max)",
+        "timing": "same day + day before",
+        "loo_mae_deaths_per_day": 18.8,
+        "spearman_with_death_ratio": 0.74,
+        "used_for_calibration": false
+      },
+      {
+        "measure": "Air temperature, weather model (daily max)",
+        "timing": "same day",
+        "loo_mae_deaths_per_day": 23.2,
+        "spearman_with_death_ratio": 0.63,
+        "used_for_calibration": false
+      },
+      {
+        "measure": "Air temperature, weather model (daily max)",
+        "timing": "same day + day before",
+        "loo_mae_deaths_per_day": 19.8,
+        "spearman_with_death_ratio": 0.7,
+        "used_for_calibration": false
+      },
+      {
+        "measure": "UTCI (daily max)",
+        "timing": "same day",
+        "loo_mae_deaths_per_day": 23.5,
+        "spearman_with_death_ratio": 0.69,
+        "used_for_calibration": false
+      },
+      {
+        "measure": "UTCI (daily max)",
+        "timing": "same day + day before",
+        "loo_mae_deaths_per_day": 18.8,
+        "spearman_with_death_ratio": 0.71,
+        "used_for_calibration": false
+      },
+      {
+        "measure": "WBGT (daily max)",
+        "timing": "same day",
+        "loo_mae_deaths_per_day": 30.9,
+        "spearman_with_death_ratio": 0.55,
+        "used_for_calibration": false
+      },
+      {
+        "measure": "WBGT (daily max)",
+        "timing": "same day + day before",
+        "loo_mae_deaths_per_day": 30.5,
+        "spearman_with_death_ratio": 0.52,
+        "used_for_calibration": false
+      }
+    ],
+    "best_same_day_measure": "Airport thermometer (daily max)",
+    "score_is_best_same_day": false,
+    "limitations": [
+      "One heatwave, 31 days, one city: not tested on any other year.",
+      "Daily deaths are read from the paper's published charts (checked: the read-off sums to the published 4,462 deaths; the reference to within 0.7 % of the published 3,118).",
+      "Scores outside the calibrated range get no death estimate.",
+      "The score for May 2010 comes from the city-level weather record (one reanalysis point), so this calibrates the citywide score, not differences between wards.",
+      "Deaths from all causes: the model says how much more deadly a day was, not why."
+    ]
+  }
+}

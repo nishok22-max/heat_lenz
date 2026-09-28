@@ -1,0 +1,209 @@
+{
+  "evidence": "MODELLED_PUBLISHED",
+  "city": "ahmedabad",
+  "date": "2026-09-30",
+  "source": "forecast",
+  "points": [
+    {
+      "hour": 0,
+      "ta_c": 28.4,
+      "heat_index_c": 31.3,
+      "wbgt_c": 25.0,
+      "utci_c": 29.2,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 1,
+      "ta_c": 28.0,
+      "heat_index_c": 30.9,
+      "wbgt_c": 25.0,
+      "utci_c": 29.1,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 2,
+      "ta_c": 27.4,
+      "heat_index_c": 29.8,
+      "wbgt_c": 24.4,
+      "utci_c": 28.1,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 3,
+      "ta_c": 26.7,
+      "heat_index_c": 28.4,
+      "wbgt_c": 23.6,
+      "utci_c": 26.7,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 4,
+      "ta_c": 26.3,
+      "heat_index_c": 26.8,
+      "wbgt_c": 23.3,
+      "utci_c": 26.3,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 5,
+      "ta_c": 25.8,
+      "heat_index_c": 26.3,
+      "wbgt_c": 23.0,
+      "utci_c": 26.1,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 6,
+      "ta_c": 25.5,
+      "heat_index_c": 26.1,
+      "wbgt_c": 23.1,
+      "utci_c": 26.4,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 7,
+      "ta_c": 25.8,
+      "heat_index_c": 26.4,
+      "wbgt_c": 23.9,
+      "utci_c": 28.3,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 8,
+      "ta_c": 27.2,
+      "heat_index_c": 29.0,
+      "wbgt_c": 27.5,
+      "utci_c": 36.9,
+      "utci_category": "Strong heat stress"
+    },
+    {
+      "hour": 9,
+      "ta_c": 29.1,
+      "heat_index_c": 31.0,
+      "wbgt_c": 29.4,
+      "utci_c": 40.5,
+      "utci_category": "Very strong heat stress"
+    },
+    {
+      "hour": 10,
+      "ta_c": 31.0,
+      "heat_index_c": 33.0,
+      "wbgt_c": 30.7,
+      "utci_c": 43.6,
+      "utci_category": "Very strong heat stress"
+    },
+    {
+      "hour": 11,
+      "ta_c": 32.3,
+      "heat_index_c": 34.2,
+      "wbgt_c": 31.4,
+      "utci_c": 45.6,
+      "utci_category": "Very strong heat stress"
+    },
+    {
+      "hour": 12,
+      "ta_c": 33.4,
+      "heat_index_c": 35.1,
+      "wbgt_c": 31.7,
+      "utci_c": 46.9,
+      "utci_category": "Extreme heat stress"
+    },
+    {
+      "hour": 13,
+      "ta_c": 34.0,
+      "heat_index_c": 36.0,
+      "wbgt_c": 31.6,
+      "utci_c": 47.1,
+      "utci_category": "Extreme heat stress"
+    },
+    {
+      "hour": 14,
+      "ta_c": 34.3,
+      "heat_index_c": 36.2,
+      "wbgt_c": 31.3,
+      "utci_c": 46.5,
+      "utci_category": "Extreme heat stress"
+    },
+    {
+      "hour": 15,
+      "ta_c": 34.3,
+      "heat_index_c": 36.2,
+      "wbgt_c": 30.6,
+      "utci_c": 44.8,
+      "utci_category": "Very strong heat stress"
+    },
+    {
+      "hour": 16,
+      "ta_c": 33.8,
+      "heat_index_c": 35.6,
+      "wbgt_c": 29.4,
+      "utci_c": 41.6,
+      "utci_category": "Very strong heat stress"
+    },
+    {
+      "hour": 17,
+      "ta_c": 33.1,
+      "heat_index_c": 34.9,
+      "wbgt_c": 28.0,
+      "utci_c": 37.8,
+      "utci_category": "Strong heat stress"
+    },
+    {
+      "hour": 18,
+      "ta_c": 32.4,
+      "heat_index_c": 34.1,
+      "wbgt_c": 26.3,
+      "utci_c": 33.3,
+      "utci_category": "Strong heat stress"
+    },
+    {
+      "hour": 19,
+      "ta_c": 32.0,
+      "heat_index_c": 33.7,
+      "wbgt_c": 25.5,
+      "utci_c": 31.3,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 20,
+      "ta_c": 31.7,
+      "heat_index_c": 33.6,
+      "wbgt_c": 25.5,
+      "utci_c": 31.3,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 21,
+      "ta_c": 31.2,
+      "heat_index_c": 33.2,
+      "wbgt_c": 25.4,
+      "utci_c": 30.9,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 22,
+      "ta_c": 30.6,
+      "heat_index_c": 32.9,
+      "wbgt_c": 25.4,
+      "utci_c": 30.6,
+      "utci_category": "Moderate heat stress"
+    },
+    {
+      "hour": 23,
+      "ta_c": 29.7,
+      "heat_index_c": 31.7,
+      "wbgt_c": 24.8,
+      "utci_c": 29.5,
+      "utci_category": "Moderate heat stress"
+    }
+  ],
+  "peak_start_hour": 9,
+  "peak_end_hour": 17,
+  "peak_rule": "Hours with UTCI of 38 \u00b0C or more \u2014 'very strong heat stress' or worse on the published UTCI scale.",
+  "max_utci_c": 47.1,
+  "max_ta_c": 34.3,
+  "min_ta_c": 25.5,
+  "max_heat_index_c": 36.2,
+  "daytime_cloud_cover_pct": 2.0,
+  "basis": "Open-Meteo hourly weather (forecast for live dates, archive reanalysis for 2010-2024) run through htsi.plan_a: Liljegren WBGT, UTCI (Broede 2012), NWS Heat Index. City-level: the same for every ward."
+}

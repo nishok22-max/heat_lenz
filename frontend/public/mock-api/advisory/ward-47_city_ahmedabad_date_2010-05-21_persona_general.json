@@ -1,0 +1,83 @@
+{
+  "zone_id": "ward-47",
+  "date": "2010-05-21",
+  "source": "history",
+  "persona": "general",
+  "risk_band": "Extreme",
+  "regime": "CUMULATIVE_DEBT",
+  "recommendations": [
+    {
+      "kind": "cooling_centre",
+      "title": "Activate overnight cooling centres in this ward",
+      "rationale": "Night minimum 29.7 \u00b0C outdoors. A hot night leaves little overnight recovery in the heat-debt model (the modelled indoor night runs hotter than outdoors), so today's strain compounds tomorrow's.",
+      "basis": "HeatLens heat-debt model, night-recovery term (not calibrated)",
+      "severity": "high"
+    },
+    {
+      "kind": "health_alert",
+      "title": "Heatwave conditions: published mortality risk is elevated",
+      "rationale": "Daily mean 37.7 \u00b0C is above the local 97th percentile (34.7 \u00b0C) for 2 or more consecutive days. In Ahmedabad, daily deaths on such days were about 1.49x those on non-heatwave days (95% CI 1.39-1.58). A published association, not a forecast of deaths.",
+      "basis": "de Bont et al., Environ Int 2024;184:108461 (PMC11790314), Ahmedabad city-specific estimate; not validated locally",
+      "severity": "high"
+    },
+    {
+      "kind": "hydration",
+      "title": "Increase water intake frequency (every 15-20 minutes if outdoors)",
+      "rationale": "HeatLens score 96.2 (Extreme, uncalibrated), driven by Heat Debt (Plan C) \u2014 dehydration risk rises with either heat load.",
+      "basis": "NIOSH Heat Stress: Hydration fact sheet (2017): 1 cup (8 oz) of water every 15-20 minutes when working in the heat",
+      "severity": "moderate"
+    },
+    {
+      "kind": "vulnerable_check",
+      "title": "Community health workers to check on elderly residents living alone",
+      "rationale": "Elderly (60+) share 7.9% (Census 2011, Ahmedabad district urban population, the same figure for every ward). Older adults sweat less and store more heat (see the source reviews).",
+      "basis": "Reviews on older adults and heat cited by the HeatLens heat-debt model (PMC12481594; Lancet 2021)",
+      "severity": "moderate"
+    }
+  ],
+  "hap_trigger": "Red",
+  "hap_trigger_basis": "Red Alert - Extreme Heat Alert Day: city max temperature 47.0 C (measured at Ahmedabad airport station, WMO 42647 (NOAA GSOD)) against AMC thresholds (Yellow >= 41.1 C, Orange >= 43.1 C, Red >= 45.0 C; AMC Heat Action Plan 2019 (Easy Read), section IV.A 'Color Signals for Heat Alert', p.3). Context, not used for the level: HeatLens thermal-stress band Extreme; published-heatwave exposure tier heatwave.",
+  "health": {
+    "evidence": "MODELLED_UNCALIBRATED",
+    "exposure_tier": "heatwave",
+    "daily_mean_temp_c": 37.72,
+    "threshold_p97_c": 34.7,
+    "intensity_pct": 8.68,
+    "relative_risk": 1.488,
+    "rr_ci_low": 1.393,
+    "rr_ci_high": 1.577,
+    "mri_0_100": 82.6,
+    "calibration_status": "not_validated_locally",
+    "source": "de Bont et al., Environ Int 2024;184:108461 (PMC11790314)",
+    "cross_checks": [
+      {
+        "condition": "daily max temperature >= 40 C",
+        "triggered": true,
+        "effect_pct": 16.0,
+        "source": "Rathi & Sodani 2021, Hyderabad (descriptive; cross-check only)"
+      },
+      {
+        "condition": "Heat Index > 54 C (NWS 'Extreme Danger')",
+        "triggered": false,
+        "effect_pct": 17.0,
+        "source": "Rathi & Sodani 2021, Hyderabad (descriptive; cross-check only)"
+      }
+    ]
+  },
+  "cap_preview": {
+    "identifier": "heatlens-ward-47-2010-05-21",
+    "sender": "heatlens-demo@example.invalid",
+    "sent": "2026-09-28T10:23:28.530731+00:00",
+    "status": "Draft",
+    "msg_type": "Alert",
+    "scope": "Public",
+    "category": "Met",
+    "event": "Extreme Heat",
+    "urgency": "Immediate",
+    "severity": "Extreme",
+    "certainty": "Likely",
+    "headline": "AMC Red Alert - Extreme Heat Alert Day - Vatva, 2010-05-21",
+    "description": "HeatLens score 96.2 (Extreme), regime CUMULATIVE_DEBT, dominant driver Heat Debt (Plan C). Daily mean 37.7 C is inside a heatwave by the published definition (2+ days above 34.7 C); Ahmedabad daily mortality was about 1.49x non-heatwave days (95% CI 1.39-1.58). Uncalibrated HeatLens composite index - not a validated health-outcome forecast.",
+    "area_desc": "Vatva"
+  }
+}

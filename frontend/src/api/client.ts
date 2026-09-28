@@ -16,7 +16,7 @@ export class ApiError extends Error {
   }
 }
 
-export const BASE_URL = '/api/v1'
+export const BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '') + '/api/v1'
 
 /** FastAPI errors are `{"detail": "..."}` (or a list for 422s); show that, not the raw JSON. */
 async function toApiError(res: Response): Promise<ApiError> {
@@ -36,18 +36,55 @@ async function toApiError(res: Response): Promise<ApiError> {
   return new ApiError(res.status, message)
 }
 
+function resolveMockPath(path: string): string {
+  // Convert e.g. /forecast/ahmedabad?days=5 -> mock-api/forecast/ahmedabad_days_5.json
+  const clean = path.replace(/^\//, '').replace(/[\?&=]/g, '_')
+  const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
+  return `${base}mock-api/${clean}.json`
+}
+
 export async function apiGet<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`)
-  if (!res.ok) throw await toApiError(res)
-  return res.json() as Promise<T>
+  try {
+    const res = await fetch(`${BASE_URL}${path}`)
+    if (!res.ok) throw await toApiError(res)
+    return (await res.json()) as T
+  } catch (err) {
+    // Fallback to static mock-api snapshot (essential for static hosting like GitHub Pages)
+    try {
+      const mockUrl = resolveMockPath(path)
+      const mockRes = await fetch(mockUrl)
+      if (mockRes.ok) {
+        return (await mockRes.json()) as T
+      }
+    } catch {
+      // ignore mock fetch error
+    }
+    throw err
+  }
 }
 
 export async function apiPost<T>(path: string, body: unknown): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  })
-  if (!res.ok) throw await toApiError(res)
-  return res.json() as Promise<T>
+  try {
+    const res = await fetch(`${BASE_URL}${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    if (!res.ok) throw await toApiError(res)
+    return (await res.json()) as T
+  } catch (err) {
+    if (path === '/chat') {
+      return {
+        reply:
+          'Hello! I am the HeatLens AI Assistant. When running on GitHub Pages static demo, the live AI model backend is in preview mode. To test full conversational Q&A, run the FastAPI backend locally or configure VITE_API_URL.',
+        evidence: 'preview',
+        suggested_actions: [
+          'Stay hydrated with electrolyte solutions (ORS / nimbu pani)',
+          'Avoid direct sun exposure between 12:00 PM and 4:00 PM',
+          'Ensure adequate ventilation in indoor resting areas',
+        ],
+      } as unknown as T
+    }
+    throw err
+  }
 }
